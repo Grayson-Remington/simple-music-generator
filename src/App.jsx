@@ -1,9 +1,9 @@
-import MusicNotes from './components/MusicNotes';
+import Staff from './components/Staff';
 
 function App() {
 	return (
 		<div className='App'>
-			<MusicNotes />
+			<Staff />
 		</div>
 	);
 }

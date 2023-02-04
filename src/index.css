@@ -12,193 +12,68 @@ body {
 }
 .App {
 	height: 100%;
+}
+.staff-container {
 	display: flex;
-	flex-direction: column;
-
-	align-items: center;
-}
-
-.clef {
-	position: absolute;
-	display: block;
-	aspect-ratio: 1/1;
-	height: 500px;
-	width: 90%;
-	z-index: -1;
-}
-.container {
-	display: block;
 	position: relative;
-	height: 100%;
-	width: 100%;
-	padding: ;
-}
-#images {
-	position: relative;
-	display: flex;
-	width: 100%;
 
-	z-index: -1;
+	row-gap: 100px;
+}
+.grand-staff {
+	position: relative;
+}
+.note-container {
+	position: relative;
 	justify-content: center;
-}
- {
-}
-.c-note {
-	position: absolute;
-	display: none;
-	aspect-ratio: 1/1;
-	height: 70px;
-	z-index: -1;
-	margin-top: 188px;
-}
-
-.c-note-first {
-	display: block;
-}
-.c-note-third {
-	display: block;
-	opacity: 50%;
-}
-.c-note-fifth {
-	display: block;
-	opacity: 50%;
-}
-.d-note {
-	position: absolute;
-	display: none;
-	aspect-ratio: 1/1;
-	height: 70px;
-	z-index: -1;
-	margin-top: 162px;
-}
-.d-note-first {
-	display: block;
-	margin-top: 338px;
-}
-.d-note-third {
-	display: block;
-	opacity: 50%;
-}
-.d-note-fifth {
-	display: block;
-	opacity: 50%;
-	margin-top: 162px;
-}
-.e-note {
-	position: absolute;
-	display: none;
-	aspect-ratio: 1/1;
-	height: 70px;
-	z-index: -1;
-	margin-top: 138px;
-}
-.e-note-first {
-	display: block;
-	margin-top: 312px;
-}
-.e-note-third {
-	display: block;
-	opacity: 50%;
-}
-.e-note-fifth {
-	display: block;
-	opacity: 50%;
-}
-.f-note {
-	position: absolute;
-	display: none;
-	aspect-ratio: 1/1;
-	height: 70px;
-	z-index: -1;
-	margin-top: 288px;
-}
-.f-note-first {
-	display: block;
-}
-.f-note-third {
-	display: block;
-	opacity: 50%;
-	margin-top: 288px;
-}
-.f-note-fifth {
-	display: block;
-	opacity: 50%;
-	margin-top: 112px;
-}
-.g-note {
-	position: absolute;
-	display: none;
-	aspect-ratio: 1/1;
-	height: 70px;
-	z-index: -1;
-	margin-top: 262px;
-}
-.g-note-first {
-	display: block;
-}
-.g-note-third {
-	display: block;
-	opacity: 50%;
-	margin-top: 262px;
-}
-.g-note-fifth {
-	display: block;
-	opacity: 50%;
-	margin-top: 88px;
-}
-.a-note {
-	position: absolute;
-	display: none;
-	aspect-ratio: 1/1;
-	height: 70px;
-	z-index: -1;
-	margin-top: 238px;
-}
-.a-note-first {
-	display: block;
-}
-.a-note-third {
-	display: block;
-	opacity: 50%;
-}
-.a-note-fifth {
-	display: block;
-	opacity: 50%;
-}
-.b-note {
-	position: absolute;
-	display: none;
-	aspect-ratio: 1/1;
-	height: 70px;
-	z-index: -1;
-	margin-top: 212px;
-}
-.b-note-first {
-	display: block;
-	margin-top: 212px;
-}
-.b-note-third {
-	display: block;
-	opacity: 50%;
-}
-.b-note-fifth {
-	display: block;
-	opacity: 50%;
-	margin-top: 212px;
-}
-
-.buttons {
-	display: grid;
-	padding: 50px;
-	grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-	gap: 5%;
-	position: absolute;
-	bottom: 10%;
 	align-items: center;
-	width: 100%;
 }
-button {
-	height: 60px;
+.lines {
+	display: block;
+	position: relative;
+}
+.note {
+	width: 60px;
+
+	position: absolute;
+	display: flex;
+
+	left: 0;
+}
+.C-note {
+	top: 95px;
+}
+.D-note {
+	top: 71px;
+}
+.E-note {
+	top: 53px;
+}
+.F-note {
+	top: 177px;
+}
+.G-note {
+	top: 154px;
+}
+.A-note {
+	top: 135px;
+}
+.B-note {
+	top: 112px;
+}
+.note-img {
 	width: 100%;
-	font-size: 50px;
+	position: relative;
+}
+.note-name {
+	font-size: 20px;
+	margin: 0;
+	background: transparent;
+}
+.link {
+}
+
+#go-here {
+	position: relative;
+	font-size: x-large;
+	left: 5000px;
 }
