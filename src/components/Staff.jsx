@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Note from '/assets/note.svg';
 import FirstStaff from '/assets/startofstaff.svg';
 import StaffLines from '/assets/lines.svg';
@@ -6,13 +6,53 @@ import data from '../data/data';
 import classNames from 'classnames';
 
 function Staff() {
-	let songlength = 25;
+	let [animationState, setAnimationState] = useState('paused');
+	const [checked, setChecked] = useState(false);
+	const handleChange = () => {
+		setChecked(!checked);
+	};
+
+	const viewportRef = useRef(null);
+
+	const handleStartAnimation = () => {
+		setAnimationState('running');
+	};
+
+	const handlePauseAnimation = () => {
+		setAnimationState('paused');
+	};
+	const handleFrameReset = () => {
+		viewportRef.current.scrollLeft = 0;
+	};
+
+	useEffect(() => {
+		const viewport = viewportRef.current;
+
+		if (!viewport) return;
+
+		if (animationState === 'running') {
+			let currentPos = {
+				x: viewport.scrollLeft,
+			};
+
+			const animation = setInterval(() => {
+				currentPos = {
+					x: currentPos.x + 2,
+				};
+				viewport.scrollLeft = currentPos.x;
+			}, 20);
+
+			return () => clearInterval(animation);
+		}
+	}, [animationState]);
+
+	let songlength = 30;
 	let [randomSequence, setRandomSequence] = useState([]);
 
 	function Reset() {
 		setRandomSequence((randomSequence = []));
 		for (let i = 0; i < songlength; i++) {
-			randomSequence.push(data[Math.floor(Math.random() * 7)]);
+			randomSequence.push(data[Math.floor(Math.random() * data.length)]);
 		}
 		setRandomSequence(randomSequence);
 		console.log(randomSequence);
@@ -20,40 +60,49 @@ function Staff() {
 		let lastchild = element.lastChild;
 
 		lastchild.id = 'last-child';
-		console.log(lastchild);
-	}
-
-	function pageScroll() {
-		let element = document.getElementsByClassName('staff-container')[0];
-		let lastchild = element.lastChild;
-		console.log(element);
-		lastchild.scrollIntoView({
-			behavior: 'smooth',
-			block: 'end',
-			inline: 'nearest',
-		});
 	}
 
 	return (
-		<>
-			<button
-				type='button'
-				onClick={() => Reset()}
-			>
-				Reset
-			</button>
-			<button
-				type='button'
-				onClick={() => pageScroll()}
-			>
-				Scroll
-			</button>
-
-			<div></div>
-
+		<div className='large-container'>
+			<div className='buttons'>
+				<button
+					type='button'
+					onClick={() => Reset()}
+				>
+					New Song
+				</button>
+				<button
+					type='button'
+					onClick={handleStartAnimation}
+				>
+					Start
+				</button>
+				<button
+					type='button'
+					onClick={handlePauseAnimation}
+				>
+					Stop
+				</button>
+				<button
+					type='button'
+					onClick={handleFrameReset}
+				>
+					Reset
+				</button>
+				<div>
+					Hints:
+					<input
+						id='checkbox'
+						type='checkbox'
+						checked={checked}
+						onChange={handleChange}
+					/>
+				</div>
+			</div>
 			<div
 				className='staff-container'
-				style={animationProps}
+				style={{ overflow: 'scroll' }}
+				ref={viewportRef}
 			>
 				<img
 					src={FirstStaff}
@@ -71,7 +120,7 @@ function Staff() {
 							<div
 								className={classNames(
 									'note',
-									`${randomSequence.first}-note`
+									`${randomSequence.id}-note`
 								)}
 							>
 								<img
@@ -80,14 +129,30 @@ function Staff() {
 									className={classNames('note-img')}
 								/>
 								<h1 className='note-name'>
-									{randomSequence.first}
+									{checked && randomSequence.id}
 								</h1>
 							</div>
+							<div
+								className={classNames({
+									'middle-c-bar':
+										randomSequence.id === 'A2' ||
+										randomSequence.id === 'C3' ||
+										randomSequence.id === 'B2' ||
+										randomSequence.id === 'D3',
+								})}
+							></div>
+							<div
+								className={classNames({
+									'a3-bar':
+										randomSequence.id === 'A2' ||
+										randomSequence.id === 'B2',
+								})}
+							></div>
 						</div>
 					);
 				})}
 			</div>
-		</>
+		</div>
 	);
 }
 

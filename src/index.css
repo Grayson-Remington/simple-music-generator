@@ -12,12 +12,18 @@ body {
 }
 .App {
 	height: 100%;
+	overflow-x: auto;
 }
 .staff-container {
 	display: flex;
 	position: relative;
-
+	width: 100%;
 	row-gap: 100px;
+	padding-top: 80px;
+	padding-bottom: 80px;
+}
+.large-container {
+	margin: 50px;
 }
 .grand-staff {
 	position: relative;
@@ -39,26 +45,120 @@ body {
 
 	left: 0;
 }
-.C-note {
-	top: 95px;
+
+button {
+	width: 100px;
+	height: 100px;
 }
-.D-note {
-	top: 71px;
+.buttons {
+	display: flex;
+	gap: 50px;
+	justify-content: center;
 }
-.E-note {
-	top: 53px;
+#checkbox {
+	height: 100px;
+	width: 100px;
 }
-.F-note {
+.top-bar {
+	position: absolute;
+	background-color: black;
+	width: 100%;
+	height: 6px;
+	top: -4.5px;
+}
+.middle-c-bar {
+	position: absolute;
+	background-color: black;
+	width: 120%;
+	height: 6px;
+	top: 251px;
+	left: -13px;
+}
+.a3-bar {
+	position: absolute;
+	background-color: black;
+	width: 120%;
+	height: 6px;
+	top: 289px;
+	left: -13px;
+}
+.F2-note {
+}
+.G2-note {
+}
+.A2-note {
+	top: 266px;
+}
+.B2-note {
+	top: 250px;
+}
+.C3-note {
+	top: 232px;
+}
+.D3-note {
+	top: 216px;
+}
+.E3-note {
 	top: 177px;
 }
-.G-note {
+.F3-note {
+	top: 195px;
+}
+.G3-note {
 	top: 154px;
 }
-.A-note {
-	top: 135px;
+.A3-note {
+	top: 134px;
 }
-.B-note {
+.B3-note {
 	top: 112px;
+}
+
+.C4-note {
+	top: 95px;
+}
+.D4-note {
+	top: 71px;
+}
+.E4-note {
+	top: 53px;
+}
+
+.F4-note {
+	top: 30px;
+}
+.G4-note {
+	top: 12px;
+}
+.A4-note {
+	top: -2px;
+}
+.B4-note {
+	top: 112px;
+}
+.C5-note {
+	top: 95px;
+}
+.D5-note {
+	top: 71px;
+}
+.E5-note {
+	top: 53px;
+}
+.F5-note {
+	top: 177px;
+}
+.G5-note {
+}
+.A5-note {
+}
+.B5-note {
+}
+.C6-note {
+}
+.D6-note {
+}
+.E6-note {
 }
 .note-img {
 	width: 100%;
@@ -68,12 +168,4 @@ body {
 	font-size: 20px;
 	margin: 0;
 	background: transparent;
-}
-.link {
-}
-
-#go-here {
-	position: relative;
-	font-size: x-large;
-	left: 5000px;
 }
