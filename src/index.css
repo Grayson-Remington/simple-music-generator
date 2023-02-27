@@ -1,171 +1,264 @@
 * {
-	box-sizing: border-box;
-	/* outline: 1px solid limegreen !important; */
+  box-sizing: border-box;
+  /* outline: 1px solid limegreen !important; */
 }
 #root {
-	height: 100%;
+  height: 100%;
 }
 html,
 body {
-	height: 100%;
-	margin: 0;
+  height: 100%;
+  margin: 0;
 }
 .App {
-	height: 100%;
-	overflow-x: auto;
+  height: 100%;
+  overflow-x: auto;
 }
 .staff-container {
-	display: flex;
-	position: relative;
-	width: 100%;
-	row-gap: 100px;
-	padding-top: 80px;
-	padding-bottom: 80px;
+  display: flex;
+  position: relative;
+  width: 100%;
+
+  row-gap: 100px;
+  padding-top: 80px;
+  padding-bottom: 80px;
 }
 .large-container {
-	margin: 50px;
+  margin: 50px;
+  height: 100%;
 }
 .grand-staff {
-	position: relative;
+  position: relative;
 }
 .note-container {
-	position: relative;
-	justify-content: center;
-	align-items: center;
+  position: relative;
+  justify-content: center;
+  align-items: center;
 }
 .lines {
-	display: block;
-	position: relative;
+  display: block;
+  position: relative;
 }
 .note {
-	width: 60px;
+  width: 63px;
 
-	position: absolute;
-	display: flex;
-
-	left: 0;
+  position: absolute;
+  display: flex;
 }
 
 button {
-	width: 100px;
-	height: 100px;
+  width: 100px;
+  height: 50px;
 }
 .buttons {
-	display: flex;
-	gap: 50px;
-	justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  justify-content: center;
 }
 #checkbox {
-	height: 100px;
-	width: 100px;
+  height: 100px;
+  width: 100px;
 }
 .top-bar {
-	position: absolute;
-	background-color: black;
-	width: 100%;
-	height: 6px;
-	top: -4.5px;
+  position: absolute;
+  background-color: black;
+  width: 100%;
+  height: 6px;
+  top: -4.5px;
 }
-.middle-c-bar {
-	position: absolute;
-	background-color: black;
-	width: 120%;
-	height: 6px;
-	top: 251px;
-	left: -13px;
+.treble-middle-c-bar {
+  position: absolute;
+  background-color: black;
+  width: 120%;
+  height: 6px;
+  top: 253px;
+  left: -13px;
+}
+.bass-middle-c-bar {
+  position: absolute;
+  background-color: black;
+  width: 120%;
+  height: 6px;
+  top: 380px;
+  left: -13px;
 }
 .a3-bar {
-	position: absolute;
-	background-color: black;
-	width: 120%;
-	height: 6px;
-	top: 289px;
-	left: -13px;
+  position: absolute;
+  background-color: black;
+  width: 120%;
+  height: 6px;
+  top: 292px;
+  left: -13px;
 }
-.F2-note {
+.middle-c-bar {
+  position: absolute;
+  background-color: black;
+  width: 120%;
+  height: 6px;
+  top: 253px;
+  left: -13px;
 }
-.G2-note {
+.BassF2-note {
+  top: 588px;
 }
-.A2-note {
-	top: 266px;
+.BassG2-note {
+  top: 466px;
 }
-.B2-note {
-	top: 250px;
+.BassA2-note {
+  top: 466px;
 }
-.C3-note {
-	top: 232px;
+.BassB2-note {
+  top: 525px;
 }
-.D3-note {
-	top: 216px;
+.BassC3-note {
+  top: 505px;
 }
-.E3-note {
-	top: 177px;
+.BassD3-note {
+  top: 484px;
 }
-.F3-note {
-	top: 195px;
+.BassE3-note {
+  top: 465px;
 }
-.G3-note {
-	top: 154px;
+.BassF3-note {
+  top: 442px;
 }
-.A3-note {
-	top: 134px;
+.BassG3-note {
+  top: 423px;
 }
-.B3-note {
-	top: 112px;
+.BassA3-note {
+  top: 400px;
+}
+.BassB3-note {
+  top: 383px;
 }
 
-.C4-note {
-	top: 95px;
+.BassC4-note {
+  top: 361px;
 }
-.D4-note {
-	top: 71px;
+.BassD4-note {
+  top: 341px;
 }
-.E4-note {
-	top: 53px;
+.BassE4-note {
+  top: 466px;
+}
+.TrebleA3-note {
+  top: 273px;
+}
+.TrebleB3-note {
+  top: 256px;
 }
 
-.F4-note {
-	top: 30px;
+.TrebleC4-note {
+  top: 233px;
 }
-.G4-note {
-	top: 12px;
+.TrebleD4-note {
+  top: 217px;
 }
-.A4-note {
-	top: -2px;
+.TrebleE4-note {
+  top: 194px;
 }
-.B4-note {
-	top: 112px;
+
+.TrebleF4-note {
+  top: 176px;
 }
-.C5-note {
-	top: 95px;
+.TrebleG4-note {
+  top: 153px;
 }
-.D5-note {
-	top: 71px;
+.TrebleA4-note {
+  top: 135px;
 }
-.E5-note {
-	top: 53px;
+.TrebleB4-note {
+  top: 112px;
 }
-.F5-note {
-	top: 177px;
+.TrebleC5-note {
+  top: 93px;
 }
-.G5-note {
+.TrebleD5-note {
+  top: 70px;
 }
-.A5-note {
+.TrebleE5-note {
+  top: 53px;
 }
-.B5-note {
+.TrebleF5-note {
+  top: 29px;
 }
-.C6-note {
+.TrebleG5-note {
+  top: 12px;
 }
-.D6-note {
+.TrebleA5-note {
 }
-.E6-note {
+.TrebleB5-note {
+}
+.TrebleC6-note {
+}
+.TrebleD6-note {
+}
+.TrebleE6-note {
 }
 .note-img {
-	width: 100%;
-	position: relative;
+  width: 100%;
+  position: relative;
 }
 .note-name {
-	font-size: 20px;
-	margin: 0;
-	background: transparent;
+  font-size: 20px;
+  margin: 0;
+  background: transparent;
+}
+
+.range-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(
+    to right,
+    #008080 0%,
+    #008080 50%,
+    #ddd 50%,
+    #ddd 100%
+  );
+  outline: none;
+  position: relative;
+}
+
+.range-slider::before,
+.range-slider::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #008080;
+  cursor: pointer;
+  margin-top: -5px;
+  z-index: 1;
+}
+
+.range-slider::before {
+  left: 0;
+}
+
+.range-slider::after {
+  right: 0;
+  background: #ddd;
+}
+
+.range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 0;
+  height: 0;
+  border: none;
+}
+
+.range-slider::-moz-range-thumb {
+  width: 0;
+  height: 0;
+  border: none;
+}
+
+.range-slider::-ms-thumb {
+  width: 0;
+  height: 0;
+  border: none;
 }
