@@ -1,0 +1,238 @@
+* {
+  box-sizing: border-box;
+}
+#root {
+  height: 100%;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+.App {
+  height: 100%;
+  overflow-x: auto;
+}
+.staff-container {
+  display: flex;
+  position: relative;
+  width: 100%;
+  row-gap: 100px;
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+.large-container {
+  margin: 50px;
+  height: 100%;
+}
+.grand-staff {
+  position: relative;
+}
+.note-container {
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+.lines {
+  display: block;
+  position: relative;
+}
+.note {
+  width: 63px;
+  position: absolute;
+  display: flex;
+}
+button {
+  width: 100px;
+  height: 50px;
+}
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  justify-content: center;
+}
+#checkbox {
+  height: 100px;
+  width: 100px;
+}
+.top-bar {
+  position: absolute;
+  background-color: #000;
+  width: 100%;
+  height: 6px;
+  top: -4.5px;
+}
+.treble-middle-c-bar {
+  position: absolute;
+  background-color: #000;
+  width: 120%;
+  height: 6px;
+  top: 253px;
+  left: -13px;
+}
+.bass-middle-c-bar {
+  position: absolute;
+  background-color: #000;
+  width: 120%;
+  height: 6px;
+  top: 380px;
+  left: -13px;
+}
+.a3-bar {
+  position: absolute;
+  background-color: #000;
+  width: 120%;
+  height: 6px;
+  top: 292px;
+  left: -13px;
+}
+.middle-c-bar {
+  position: absolute;
+  background-color: #000;
+  width: 120%;
+  height: 6px;
+  top: 253px;
+  left: -13px;
+}
+.BassF2-note {
+  top: 588px;
+}
+.BassG2-note,
+.BassA2-note {
+  top: 466px;
+}
+.BassB2-note {
+  top: 525px;
+}
+.BassC3-note {
+  top: 505px;
+}
+.BassD3-note {
+  top: 484px;
+}
+.BassE3-note {
+  top: 465px;
+}
+.BassF3-note {
+  top: 442px;
+}
+.BassG3-note {
+  top: 423px;
+}
+.BassA3-note {
+  top: 400px;
+}
+.BassB3-note {
+  top: 383px;
+}
+.BassC4-note {
+  top: 361px;
+}
+.BassD4-note {
+  top: 341px;
+}
+.BassE4-note {
+  top: 466px;
+}
+.TrebleA3-note {
+  top: 273px;
+}
+.TrebleB3-note {
+  top: 256px;
+}
+.TrebleC4-note {
+  top: 233px;
+}
+.TrebleD4-note {
+  top: 217px;
+}
+.TrebleE4-note {
+  top: 194px;
+}
+.TrebleF4-note {
+  top: 176px;
+}
+.TrebleG4-note {
+  top: 153px;
+}
+.TrebleA4-note {
+  top: 135px;
+}
+.TrebleB4-note {
+  top: 112px;
+}
+.TrebleC5-note {
+  top: 93px;
+}
+.TrebleD5-note {
+  top: 70px;
+}
+.TrebleE5-note {
+  top: 53px;
+}
+.TrebleF5-note {
+  top: 29px;
+}
+.TrebleG5-note {
+  top: 12px;
+}
+.note-img {
+  width: 100%;
+  position: relative;
+}
+.note-name {
+  font-size: 20px;
+  margin: 0;
+  background: transparent;
+}
+.range-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(
+    to right,
+    #008080 0%,
+    #008080 50%,
+    #ddd 50%,
+    #ddd 100%
+  );
+  outline: none;
+  position: relative;
+}
+.range-slider:before,
+.range-slider:after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #008080;
+  cursor: pointer;
+  margin-top: -5px;
+  z-index: 1;
+}
+.range-slider:before {
+  left: 0;
+}
+.range-slider:after {
+  right: 0;
+  background: #ddd;
+}
+.range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 0;
+  height: 0;
+  border: none;
+}
+.range-slider::-moz-range-thumb {
+  width: 0;
+  height: 0;
+  border: none;
+}
+.range-slider::-ms-thumb {
+  width: 0;
+  height: 0;
+  border: none;
+}
