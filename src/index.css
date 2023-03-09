@@ -14,41 +14,63 @@ body {
   height: 100%;
   overflow-x: auto;
 }
-.staff-container {
-  display: flex;
-  position: relative;
-  width: 100%;
-
-  row-gap: 100px;
-  padding-top: 80px;
-  padding-bottom: 80px;
-}
 .large-container {
-  margin: 50px;
+  position: relative;
+  display: block;
+  padding: 50px;
+  height: fit-content;
+}
+.settings-button {
+  display: block;
+  position: absolute;
+  right: 30px;
+  top: 15px;
+  z-index: 3;
+  border-radius: 10px;
+  background-color: red;
+  color: white;
+}
+
+.settings {
+  display: grid;
+  align-items: center;
+
+  gap: 25px;
   height: 100%;
+  width: 100%;
+  position: absolute;
+  padding: 50px;
+  background-color: white;
+  z-index: 2;
 }
-.grand-staff {
-  position: relative;
+.songlength-input {
+  width: 50px;
 }
-.note-container {
-  position: relative;
+.settings-limit {
+  display: flex;
+  gap: 10px;
+}
+.settings select {
+  display: block;
+  font-weight: bold;
+  background-color: rgba(254, 254, 16, 0.497);
+
+  height: 50px;
+  width: 50px;
   justify-content: center;
+}
+.limits-text {
+  font-size: 20px;
+  opacity: 100%;
+}
+.hints {
+  display: flex;
   align-items: center;
 }
-.lines {
+.hints-checkbox {
   display: block;
-  position: relative;
-}
-.note {
-  width: 63px;
-
-  position: absolute;
-  display: flex;
-}
-
-button {
-  width: 100px;
-  height: 50px;
+  height: 25px;
+  width: 50px;
 }
 .buttons {
   display: flex;
@@ -56,209 +78,226 @@ button {
   gap: 50px;
   justify-content: center;
 }
-#checkbox {
-  height: 100px;
-  width: 100px;
+.buttons button {
+  display: block;
+  width: 80px;
+  padding: 10px;
+  border-radius: 10px;
 }
-.top-bar {
-  position: absolute;
-  background-color: black;
-  width: 100%;
-  height: 6px;
-  top: -4.5px;
-}
-.treble-middle-c-bar {
-  position: absolute;
-  background-color: black;
-  width: 120%;
-  height: 6px;
-  top: 253px;
-  left: -13px;
-}
-.bass-middle-c-bar {
-  position: absolute;
-  background-color: black;
-  width: 120%;
-  height: 6px;
-  top: 380px;
-  left: -13px;
-}
-.a3-bar {
-  position: absolute;
-  background-color: black;
-  width: 120%;
-  height: 6px;
-  top: 292px;
-  left: -13px;
-}
-.middle-c-bar {
-  position: absolute;
-  background-color: black;
-  width: 120%;
-  height: 6px;
-  top: 253px;
-  left: -13px;
-}
-.BassF2-note {
-  top: 588px;
-}
-.BassG2-note {
-  top: 466px;
-}
-.BassA2-note {
-  top: 466px;
-}
-.BassB2-note {
-  top: 525px;
-}
-.BassC3-note {
-  top: 505px;
-}
-.BassD3-note {
-  top: 484px;
-}
-.BassE3-note {
-  top: 465px;
-}
-.BassF3-note {
-  top: 442px;
-}
-.BassG3-note {
-  top: 423px;
-}
-.BassA3-note {
-  top: 400px;
-}
-.BassB3-note {
-  top: 383px;
+.staff-container {
+  display: flex;
+  position: relative;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  height: 600px;
 }
 
-.BassC4-note {
-  top: 361px;
-}
-.BassD4-note {
-  top: 341px;
-}
-.BassE4-note {
-  top: 466px;
-}
-.TrebleA3-note {
-  top: 273px;
-}
-.TrebleB3-note {
-  top: 256px;
-}
-
-.TrebleC4-note {
-  top: 233px;
-}
-.TrebleD4-note {
-  top: 217px;
-}
-.TrebleE4-note {
-  top: 194px;
-}
-
-.TrebleF4-note {
-  top: 176px;
-}
-.TrebleG4-note {
-  top: 153px;
-}
-.TrebleA4-note {
-  top: 135px;
-}
-.TrebleB4-note {
-  top: 112px;
-}
-.TrebleC5-note {
-  top: 93px;
-}
-.TrebleD5-note {
-  top: 70px;
-}
-.TrebleE5-note {
-  top: 53px;
-}
-.TrebleF5-note {
-  top: 29px;
-}
-.TrebleG5-note {
-  top: 12px;
-}
-.TrebleA5-note {
-}
-.TrebleB5-note {
-}
-.TrebleC6-note {
-}
-.TrebleD6-note {
-}
-.TrebleE6-note {
-}
-.note-img {
-  width: 100%;
+.grand-staff {
   position: relative;
 }
+.note-container {
+  display: flex;
+  position: relative;
+  height: 100%;
+}
+.lines {
+  display: block;
+  position: relative;
+}
+.note {
+  height: 7.14%;
+  position: absolute;
+  display: flex;
+}
+
+.note-img {
+  position: relative;
+  display: flex;
+}
 .note-name {
-  font-size: 20px;
+  display: block;
+  position: relative;
+  font-size: 70%;
   margin: 0;
+  padding-top: 2%;
   background: transparent;
 }
 
-.range-slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 10px;
-  border-radius: 5px;
-  background: linear-gradient(
-    to right,
-    #008080 0%,
-    #008080 50%,
-    #ddd 50%,
-    #ddd 100%
-  );
-  outline: none;
-  position: relative;
-}
-
-.range-slider::before,
-.range-slider::after {
-  content: "";
+.C6-bar {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #008080;
-  cursor: pointer;
-  margin-top: -5px;
-  z-index: 1;
+  background-color: black;
+  width: 80%;
+  height: 1%;
+  top: -5.91%;
+  left: -10%;
+}
+.A5-bar {
+  position: absolute;
+  background-color: black;
+  width: 80%;
+  height: 1%;
+  top: 1.52%;
+  left: -10%;
+}
+.treble-C4-bar {
+  position: absolute;
+  background-color: black;
+  width: 80%;
+  height: 1%;
+  top: 42.74%;
+  left: -10%;
+}
+.A3-bar {
+  position: absolute;
+  background-color: black;
+  width: 80%;
+  height: 1%;
+  top: 49.3%;
+  left: -10%;
+}
+.bass-C4-bar {
+  position: absolute;
+  background-color: black;
+  width: 80%;
+  height: 1%;
+  top: 64.12%;
+  left: -10%;
+}
+.E4-bar {
+  position: absolute;
+  background-color: black;
+  width: 80%;
+  height: 1%;
+  top: 57.2%;
+  left: -10%;
 }
 
-.range-slider::before {
-  left: 0;
+.bass-C3-bar {
+  position: absolute;
+  background-color: black;
+  width: 80%;
+  height: 1%;
+  top: 42.73%;
+  left: -10%;
+}
+.E2-bar {
+  position: absolute;
+  background-color: black;
+  width: 80%;
+  height: 1%;
+  top: 105.74%;
+  left: -10%;
+}
+.C2-bar {
+  position: absolute;
+  background-color: black;
+  width: 80%;
+  height: 1%;
+  top: 112.66%;
+  left: -10%;
+}
+.BassC2-note {
+  top: 109.62%;
+}
+.BassD2-note {
+  top: 106.25%;
+}
+.BassE2-note {
+  top: 102.53%;
+}
+.BassF2-note {
+  top: 99.32%;
+}
+.BassG2-note {
+  top: 95.56%;
+}
+.BassA2-note {
+  top: 92.5%;
+}
+.BassB2-note {
+  top: 88.68%;
+}
+.BassC3-note {
+  top: 85.3%;
+}
+.BassD3-note {
+  top: 81.75%;
+}
+.BassE3-note {
+  top: 78.54%;
+}
+.BassF3-note {
+  top: 74.66%;
+}
+.BassG3-note {
+  top: 71.45%;
+}
+.BassA3-note {
+  top: 67.56%;
+}
+.BassB3-note {
+  top: 64.69%;
 }
 
-.range-slider::after {
-  right: 0;
-  background: #ddd;
+.BassC4-note {
+  top: 60.97%;
+}
+.BassD4-note {
+  top: 57.6%;
+}
+.BassE4-note {
+  top: 53.9%;
+}
+.TrebleA3-note {
+  top: 46.11%;
+}
+.TrebleB3-note {
+  top: 43.24%;
 }
 
-.range-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 0;
-  height: 0;
-  border: none;
+.TrebleC4-note {
+  top: 39.35%;
+}
+.TrebleD4-note {
+  top: 36.65%;
+}
+.TrebleE4-note {
+  top: 32.77%;
 }
 
-.range-slider::-moz-range-thumb {
-  width: 0;
-  height: 0;
-  border: none;
+.TrebleF4-note {
+  top: 29.72%;
 }
-
-.range-slider::-ms-thumb {
-  width: 0;
-  height: 0;
-  border: none;
+.TrebleG4-note {
+  top: 25.84%;
+}
+.TrebleA4-note {
+  top: 22.8%;
+}
+.TrebleB4-note {
+  top: 18.91%;
+}
+.TrebleC5-note {
+  top: 15.71%;
+}
+.TrebleD5-note {
+  top: 11.82%;
+}
+.TrebleE5-note {
+  top: 8.95%;
+}
+.TrebleF5-note {
+  top: 4.9%;
+}
+.TrebleG5-note {
+  top: 2.03%;
+}
+.TrebleA5-note {
+  top: -1.69%;
+}
+.TrebleB5-note {
+  top: -5.23%;
+}
+.TrebleC6-note {
+  top: -9.12%;
 }

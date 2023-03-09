@@ -16,7 +16,7 @@ function Staff() {
   let [treblepattern, setTreblePattern] = useState([]);
   let [animationState, setAnimationState] = useState("paused");
   let [checked, setChecked] = useState(false);
-
+  let [showSettings, setShowSettings] = useState(false);
   //useEffects
   const handleChange = () => {
     setChecked(!checked);
@@ -122,7 +122,7 @@ function Staff() {
     let choice = parseInt(event.target.value);
     setBassLowerLimit(choice);
     setLocalBassLowerLimit(choice);
-    setLocalBassUpperLimit((localbassUpperLimit) => {
+    setLocalBassUpperLimit(() => {
       const newValue = localBassLowerLimit + localBassUpperLimit - choice;
       return newValue;
     });
@@ -214,142 +214,205 @@ function Staff() {
   //RangeSlider
 
   return (
-    <div className='large-container'>
-      <div className='buttons'>
-        <div>
-          <h1>Set Lower Treble Limit</h1>
-          <select
-            id='lowerTrebleLimit'
-            value={localtrebleLowerLimit}
-            onChange={(event) => handleTrebleLowerLimitChange(event)}>
-            {trebleLowerLimitOptions.map((option, index) => (
-              <option key={index} value={index}>
-                {option.Trebleid.slice(-2)}
-              </option>
-            ))}
-          </select>
-          <h1>Set Upper Treble Limit</h1>
-          <select
-            id='upperTrebleLimit'
-            value={localtrebleUpperLimit}
-            onChange={(event) => handleTrebleUpperLimitChange(event)}>
-            {trebleUpperLimitOptions.map((option, index) => (
-              <option key={option.Trebleid} value={index}>
-                {option.Trebleid.slice(-2)}
-              </option>
-            ))}
-          </select>
+    <>
+      {showSettings && (
+        <div className='settings'>
+          <div className='settings-limit'>
+            <h1 className='limits-text'>Song Length:</h1>
+            <input
+              className='songlength-input'
+              type='number'
+              onChange={(e) => setSongLength(e.target.value)}
+              value={songlength}
+            />
+          </div>
+          <div className='settings-limit'>
+            <h1 className='limits-text'>Set Lower Treble Limit:</h1>
+            <select
+              id='lowerTrebleLimit'
+              value={localtrebleLowerLimit}
+              onChange={(event) => handleTrebleLowerLimitChange(event)}>
+              {trebleLowerLimitOptions.map((option, index) => (
+                <option key={index} value={index}>
+                  {option.Trebleid.slice(-2)}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className='settings-limit'>
+            <h1 className='limits-text'>Set Upper Treble Limit:</h1>
+            <select
+              id='upperTrebleLimit'
+              value={localtrebleUpperLimit}
+              onChange={(event) => handleTrebleUpperLimitChange(event)}>
+              {trebleUpperLimitOptions.map((option, index) => (
+                <option key={option.Trebleid} value={index}>
+                  {option.Trebleid.slice(-2)}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className='settings-limit'>
+            <h1 className='limits-text'>Set Lower Bass Limit:</h1>
+            <select
+              id='lowerBassLimit'
+              value={localBassLowerLimit}
+              onChange={(event) => handleBassLowerLimitChange(event)}>
+              {bassLowerLimitOptions.map((option, index) => (
+                <option key={index} value={index}>
+                  {option.Bassid.slice(-2)}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className='settings-limit'>
+            <h1 className='limits-text'>Set Upper Bass Limit:</h1>
+            <select
+              id='upperBassLimit'
+              value={localBassUpperLimit}
+              onChange={(event) => handleBassUpperLimitChange(event)}>
+              {bassUpperLimitOptions.map((option, index) => (
+                <option key={index} value={index}>
+                  {option.Bassid.slice(-2)}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-        <div>
-          <h1>Set Lower Bass Limit</h1>
-          <select
-            id='lowerBassLimit'
-            value={localBassLowerLimit}
-            onChange={(event) => handleBassLowerLimitChange(event)}>
-            {bassLowerLimitOptions.map((option, index) => (
-              <option key={index} value={index}>
-                {option.Bassid.slice(-2)}
-              </option>
-            ))}
-          </select>
-          <h1>Set Upper Bass Limit</h1>
-          <select
-            id='upperBassLimit'
-            value={localBassUpperLimit}
-            onChange={(event) => handleBassUpperLimitChange(event)}>
-            {bassUpperLimitOptions.map((option, index) => (
-              <option key={index} value={index}>
-                {option.Bassid.slice(-2)}
-              </option>
-            ))}
-          </select>
+      )}
+      <button
+        className='settings-button'
+        onClick={() => setShowSettings(!showSettings)}>
+        Settings
+      </button>
+      <div className='large-container'>
+        <div className='buttons'>
+          <button className='' type='button' onClick={() => NewSong()}>
+            New Song
+          </button>
+          <button type='button' onClick={handleStartAnimation}>
+            Start
+          </button>
+          <button type='button' onClick={handlePauseAnimation}>
+            Stop
+          </button>
+          <button type='button' onClick={handleFrameReset}>
+            Reset
+          </button>
+          <div className='hints'>
+            Hints:
+            <input
+              className='hints-checkbox'
+              id='checkbox'
+              type='checkbox'
+              checked={checked}
+              onChange={handleChange}
+            />
+          </div>
         </div>
+        <div
+          onClick={handleStartAnimation}
+          className='staff-container'
+          style={{ overflow: "scroll" }}
+          ref={viewportRef}
+          tabIndex={0}>
+          <img src={FirstStaff} alt='' className='grand-staff' />
 
-        <div>
-          Hints:
-          <input
-            id='checkbox'
-            type='checkbox'
-            checked={checked}
-            onChange={handleChange}
-          />
-        </div>
-      </div>
-      <div>
-        <button type='button' onClick={() => NewSong()}>
-          New Song
-        </button>
-        <button type='button' onClick={handleStartAnimation}>
-          Start
-        </button>
-        <button type='button' onClick={handlePauseAnimation}>
-          Stop
-        </button>
-        <button type='button' onClick={handleFrameReset}>
-          Reset
-        </button>
-      </div>
-      <div
-        className='staff-container'
-        style={{ overflow: "scroll" }}
-        ref={viewportRef}
-        tabIndex={0}>
-        <img src={FirstStaff} alt='' className='grand-staff' />
-        {songpattern.map((songpattern, index) => {
-          return (
-            <div className='note-container' key={index}>
-              <img src={StaffLines} alt='' className='lines' />
-              <div
-                className={classNames("note", `${songpattern.Trebleid}-note`)}>
-                <img src={Note} alt='' className={classNames("note-img")} />
-                <h1 className='note-name'>
-                  {checked &&
-                    songpattern.Trebleid.slice(
-                      songpattern.Trebleid.length - 2,
-                      songpattern.Trebleid.length
-                    )}
-                </h1>
-              </div>
-              {songpattern.Bassid && (
+          {songpattern.map((songpattern, index) => {
+            return (
+              <div className='note-container' key={index}>
+                <img src={StaffLines} alt='' className='lines' />
                 <div
-                  className={classNames("note", `${songpattern.Bassid}-note`)}>
+                  className={classNames(
+                    "note",
+                    `${songpattern.Trebleid}-note`
+                  )}>
                   <img src={Note} alt='' className={classNames("note-img")} />
                   <h1 className='note-name'>
                     {checked &&
-                      songpattern.Bassid.slice(
-                        songpattern.Bassid.length - 2,
-                        songpattern.Bassid.length
+                      songpattern.Trebleid.slice(
+                        songpattern.Trebleid.length - 2,
+                        songpattern.Trebleid.length
                       )}
                   </h1>
                 </div>
-              )}
-              {/* Extra Bars */}
-              <div
-                className={classNames({
-                  "treble-middle-c-bar":
-                    songpattern.Trebleid === "TrebleA3" ||
-                    songpattern.Trebleid === "TrebleC4" ||
-                    songpattern.Trebleid === "TrebleB3" ||
-                    songpattern.Trelbeid === "TrebleD4",
-                })}></div>
-              <div
-                className={classNames({
-                  "bass-middle-c-bar":
-                    songpattern.Bassid === "BassC4" ||
-                    songpattern.Bassid === "BassB3" ||
-                    songpattern.Bassid === "BassD4",
-                })}></div>
-              <div
-                className={classNames({
-                  "a3-bar":
-                    songpattern.Trebleid === "TrebleA3" ||
-                    songpattern.id === "B2",
-                })}></div>
-            </div>
-          );
-        })}
+                {songpattern.Bassid && (
+                  <div
+                    className={classNames(
+                      "note",
+                      `${songpattern.Bassid}-note`
+                    )}>
+                    <img src={Note} alt='' className={classNames("note-img")} />
+                    <h1 className='note-name'>
+                      {checked &&
+                        songpattern.Bassid.slice(
+                          songpattern.Bassid.length - 2,
+                          songpattern.Bassid.length
+                        )}
+                    </h1>
+                  </div>
+                )}
+                {/* Extra Bars */}
+                <div
+                  className={classNames({
+                    "C6-bar": songpattern.Trebleid === "TrebleC6",
+                  })}></div>
+                <div
+                  className={classNames({
+                    "A5-bar":
+                      songpattern.Trebleid === "TrebleB5" ||
+                      songpattern.Trebleid === "TrebleA5" ||
+                      songpattern.Trebleid === "TrebleC6",
+                  })}></div>
+
+                <div
+                  className={classNames({
+                    "treble-C4-bar":
+                      songpattern.Trebleid === "TrebleA3" ||
+                      songpattern.Trebleid === "TrebleC4" ||
+                      songpattern.Trebleid === "TrebleB3" ||
+                      songpattern.Trelbeid === "TrebleD4",
+                  })}></div>
+                <div
+                  className={classNames({
+                    "A3-bar":
+                      songpattern.Trebleid === "TrebleA3" ||
+                      songpattern.Trebleid === "TrebleB2",
+                  })}></div>
+                {/*bass bars*/}
+                <div
+                  className={classNames({
+                    "E4-bar":
+                      songpattern.Bassid === "BassD4" ||
+                      songpattern.Bassid === "BassE4",
+                  })}></div>
+                <div
+                  className={classNames({
+                    "bass-C4-bar":
+                      songpattern.Bassid === "BassC4" ||
+                      songpattern.Bassid === "BassE4" ||
+                      songpattern.Bassid === "BassD4",
+                  })}></div>
+                <div
+                  className={classNames({
+                    "E2-bar":
+                      songpattern.Bassid === "BassE2" ||
+                      songpattern.Bassid === "BassF2" ||
+                      songpattern.Bassid === "BassD2" ||
+                      songpattern.Bassid === "BassC2",
+                  })}></div>
+                <div
+                  className={classNames({
+                    "C2-bar":
+                      songpattern.Bassid === "BassC2" ||
+                      songpattern.Bassid === "BassD2",
+                  })}></div>
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
