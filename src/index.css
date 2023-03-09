@@ -91,7 +91,10 @@ body {
 }
 
 .grand-staff {
+	display: flex;
 	position: relative;
+	height: 100%;
+	margin: 0;
 }
 .note-container {
 	display: flex;
@@ -111,11 +114,14 @@ body {
 	position: absolute;
 	display: flex;
 	width: 100%;
+	margin: 0;
 }
 
 .note-img {
 	position: relative;
 	display: flex;
+	height: 100%;
+	margin: 0;
 }
 .note-name {
 	display: block;
