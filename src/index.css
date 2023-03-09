@@ -15,10 +15,7 @@ body {
 	overflow-x: auto;
 }
 .large-container {
-	position: relative;
-	display: block;
 	padding: 50px;
-	height: fit-content;
 }
 .settings-button {
 	display: block;
@@ -90,6 +87,7 @@ body {
 	padding-top: 100px;
 	padding-bottom: 100px;
 	height: 600px;
+	width: 100%;
 }
 
 .grand-staff {
@@ -100,10 +98,13 @@ body {
 	position: relative;
 	height: 100%;
 	width: 100%;
+	margin: 0;
 }
 .lines {
 	display: flex;
 	position: relative;
+	height: 100%;
+	margin: 0;
 }
 .note {
 	height: 7.14%;
