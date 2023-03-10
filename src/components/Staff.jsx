@@ -197,7 +197,7 @@ function Staff() {
 	function SetBassNotes() {
 		setBassPattern((basspattern = []));
 		for (let i = 0; i < songlength; i++) {
-			if (i % 4 === 0) {
+			if (i % 3 === 0) {
 				basspattern.push(
 					bassdata[
 						Math.floor(
