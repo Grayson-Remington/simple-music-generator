@@ -242,13 +242,12 @@ function Staff() {
 			case 'RandomTrebleNotes':
 				setTrebleUpperLimit(16);
 				setLocalTrebleUpperLimit(16);
-				handleTrebleUpperLimitChange(15);
 
 				break;
 			case 'SimpleArpeggios':
 				setTrebleUpperLimit(12);
 				setLocalTrebleUpperLimit(12);
-				handleTrebleUpperLimitChange(11);
+
 				break;
 			default:
 				break;

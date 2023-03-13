@@ -53,7 +53,7 @@ body {
 	background-color: rgba(254, 254, 16, 0.497);
 
 	height: 50px;
-	width: 50px;
+	width: fit-content;
 	justify-content: center;
 }
 .limits-text {
