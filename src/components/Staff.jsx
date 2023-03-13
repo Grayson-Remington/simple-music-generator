@@ -52,10 +52,10 @@ function Staff() {
 
 				animation = setInterval(() => {
 					currentPos = {
-						x: currentPos.x + 2,
+						x: currentPos.x + 0.1,
 					};
 					viewport.scrollLeft = currentPos.x;
-				}, 20);
+				}, 2);
 				document.addEventListener('click', handleDocumentClick);
 			}, 2000);
 
