@@ -158,8 +158,10 @@ function Staff() {
 				trebledata[
 					Math.floor(
 						Math.random() *
-							(trebleUpperLimit - trebleLowerLimit + 1) +
-							trebleLowerLimit
+							(localtrebleUpperLimit -
+								localtrebleLowerLimit +
+								1) +
+							localtrebleLowerLimit
 					)
 				]
 			);
