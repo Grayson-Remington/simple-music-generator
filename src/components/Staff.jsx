@@ -177,6 +177,8 @@ function Staff() {
 				treblepattern.push(trebledata[index + 2]);
 				treblepattern.push(trebledata[index + 4]);
 				treblepattern.push(trebledata[index + 7]);
+				treblepattern.push(trebledata[index + 4]);
+				treblepattern.push(trebledata[index + 2]);
 			}
 		}
 	}
@@ -193,7 +195,7 @@ function Staff() {
 	function SetBassNotes() {
 		setBassPattern((basspattern = []));
 		for (let i = 0; i < songlength; i++) {
-			if (i % 4 === 0 || i === 0) {
+			if (i % 7 === 0 || i === 0) {
 				basspattern.push(bassdata[treblepattern[i].id + 5]);
 			} else {
 				basspattern.push({});
