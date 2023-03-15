@@ -169,12 +169,14 @@ function Staff() {
 		for (let i = 0; i < songlength; i++) {
 			for (let j = 0; j < 2; j++) {
 				let index = Math.floor(
-					Math.random() * (trebleUpperLimit - trebleLowerLimit + 1) +
-						trebleLowerLimit
+					Math.random() *
+						(localtrebleUpperLimit - localtrebleLowerLimit + 1) +
+						localtrebleLowerLimit
 				);
 				treblepattern.push(trebledata[index]);
 				treblepattern.push(trebledata[index + 2]);
 				treblepattern.push(trebledata[index + 4]);
+				treblepattern.push(trebledata[index + 7]);
 			}
 		}
 	}
@@ -191,15 +193,8 @@ function Staff() {
 	function SetBassNotes() {
 		setBassPattern((basspattern = []));
 		for (let i = 0; i < songlength; i++) {
-			if (i % 3 === 0) {
-				basspattern.push(
-					bassdata[
-						Math.floor(
-							Math.random() *
-								(bassUpperLimit - bassLowerLimit + 1)
-						) + bassLowerLimit
-					]
-				);
+			if (i % 4 === 0 || i === 0) {
+				basspattern.push(bassdata[treblepattern[i].id + 5]);
 			} else {
 				basspattern.push({});
 			}
@@ -235,13 +230,12 @@ function Staff() {
 		switch (event.target.value) {
 			case 'RandomTrebleNotes':
 				setTrebleUpperLimit(16);
-				setLocalTrebleUpperLimit(16);
-
 				break;
 			case 'SimpleArpeggios':
-				setTrebleUpperLimit(12);
-				setLocalTrebleUpperLimit(12);
-
+				setTrebleUpperLimit(9);
+				if (localtrebleUpperLimit > 9) {
+					setLocalTrebleUpperLimit(9);
+				}
 				break;
 			default:
 				break;
