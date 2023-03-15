@@ -29,14 +29,12 @@ body {
 }
 
 .settings {
-	display: grid;
-	align-items: center;
-
-	gap: 25px;
+	display: flex;
+	flex-direction: column;
+	padding-top: 50px;
 	height: 100%;
 	width: 100%;
 	position: absolute;
-	padding: 50px;
 	background-color: white;
 	z-index: 2;
 }
@@ -45,13 +43,18 @@ body {
 }
 .settings-limit {
 	display: flex;
-	gap: 10px;
+	justify-content: space-between;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px;
+	min-width: 350px;
+	width: 100%;
+	max-width: 450px;
 }
 .settings select {
 	display: block;
 	font-weight: bold;
 	background-color: rgba(254, 254, 16, 0.497);
-
 	height: 50px;
 	width: fit-content;
 	justify-content: center;

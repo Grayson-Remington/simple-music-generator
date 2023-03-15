@@ -52,7 +52,7 @@ function Staff() {
 
 				animation = setInterval(() => {
 					currentPos = {
-						x: currentPos.x + 0.1,
+						x: currentPos.x + 0.3,
 					};
 					viewport.scrollLeft = currentPos.x;
 				}, 2);
@@ -80,21 +80,14 @@ function Staff() {
 	const [localtrebleUpperLimit, setLocalTrebleUpperLimit] = useState(16);
 	const [treblePatternOptions, setTreblePatternOptions] = useState([]);
 
-	const handleTrebleLowerLimitChange = (event) => {
+	const handleTrebleLowerLimitChange = (event, index) => {
 		let choice = parseInt(event.target.value);
 		setTrebleLowerLimit(choice);
 		setLocalTrebleLowerLimit(choice);
-		setLocalTrebleUpperLimit((localtrebleUpperLimit) => {
-			const newValue =
-				localtrebleLowerLimit + localtrebleUpperLimit - choice;
-			return newValue;
-		});
 	};
-	const handleTrebleUpperLimitChange = (event) => {
+	const handleTrebleUpperLimitChange = (event, index) => {
 		let choice = parseInt(event.target.value);
-		setTrebleUpperLimit(
-			trebledata.length - trebleUpperLimitOptions.length + choice
-		); //
+		//
 		setLocalTrebleUpperLimit(choice);
 	};
 
@@ -111,11 +104,12 @@ function Staff() {
 	);
 
 	const trebleLowerLimitOptions = trebledata.filter(
-		(option, index) => index <= trebleUpperLimit
+		(option, index) => index <= localtrebleUpperLimit
 	); //Match the option and select all options below the trebleUpperLimit
 
 	const trebleUpperLimitOptions = trebledata.filter(
-		(option, index) => index >= trebleLowerLimit
+		(option, index) =>
+			index >= trebleLowerLimit && index <= trebleUpperLimit
 	);
 
 	const [bassLowerLimit, setBassLowerLimit] = useState(0);
@@ -288,14 +282,15 @@ function Staff() {
 						<select
 							id='treble-function-select'
 							value={selectedTrebleFunction}
-							onChange={(event) =>
-								handleTrebleFunctionChange(event)
+							onChange={(event, index) =>
+								handleTrebleFunctionChange(event, index)
 							}
 						>
-							{trebleFunctionList.map((option) => (
+							{trebleFunctionList.map((option, index) => (
 								<option
 									key={option.value}
 									value={option.value}
+									index={index}
 								>
 									{option.label}
 								</option>
@@ -307,14 +302,15 @@ function Staff() {
 						<select
 							id='lowerTrebleLimit'
 							value={localtrebleLowerLimit}
-							onChange={(event) =>
-								handleTrebleLowerLimitChange(event)
+							onChange={(event, index) =>
+								handleTrebleLowerLimitChange(event, index)
 							}
 						>
 							{trebleLowerLimitOptions.map((option, index) => (
 								<option
-									key={index}
-									value={index}
+									key={option.Trebleid}
+									value={option.id}
+									index={index}
 								>
 									{option.Trebleid.slice(-2)}
 								</option>
@@ -333,7 +329,7 @@ function Staff() {
 							{trebleUpperLimitOptions.map((option, index) => (
 								<option
 									key={option.Trebleid}
-									value={index}
+									value={option.id}
 								>
 									{option.Trebleid.slice(-2)}
 								</option>
