@@ -10,6 +10,10 @@ body {
 	height: 100%;
 	margin: 0;
 }
+h1 {
+	margin-block-start: 0;
+	margin-block-end: 0;
+}
 .App {
 	height: 100%;
 	overflow-x: auto;
@@ -131,8 +135,10 @@ body {
 .note-name {
 	display: block;
 	position: relative;
-	font-size: 1.2rem;
 	margin: 0;
+	font-size: 100%;
+	height: 50%;
+	top: 5%;
 	background: transparent;
 }
 
