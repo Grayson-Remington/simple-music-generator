@@ -10,13 +10,14 @@ import classNames from 'classnames';
 
 function Staff() {
 	//States
-	let [songlength, setSongLength] = useState(30);
+	let [songlength, setSongLength] = useState(300);
 	let [songpattern, setSongPattern] = useState([]);
 	let [basspattern, setBassPattern] = useState([]);
 	let [treblepattern, setTreblePattern] = useState([]);
 	let [animationState, setAnimationState] = useState('paused');
 	let [checked, setChecked] = useState(false);
 	let [showSettings, setShowSettings] = useState(false);
+	let [speed, setSpeed] = useState(0.4);
 	//useEffects
 	const handleChange = () => {
 		setChecked(!checked);
@@ -52,7 +53,7 @@ function Staff() {
 
 				animation = setInterval(() => {
 					currentPos = {
-						x: currentPos.x + 0.3,
+						x: currentPos.x + speed,
 					};
 					viewport.scrollLeft = currentPos.x;
 				}, 2);
@@ -184,6 +185,25 @@ function Staff() {
 			}
 		}
 	}
+	function FiveFinger() {
+		for (let i = 0; i < songlength; i++) {
+			for (let j = 0; j < 2; j++) {
+				let index = Math.floor(
+					Math.random() *
+						(localtrebleUpperLimit - localtrebleLowerLimit + 1) +
+						localtrebleLowerLimit
+				);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index + 1]);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index + 2]);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index + 3]);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index + 4]);
+			}
+		}
+	}
 	//Set Treble Notes
 	function SetTrebleNotes() {
 		//What if I used slice here
@@ -227,10 +247,11 @@ function Staff() {
 	const trebleFunctionList = [
 		{ value: 'RandomTrebleNotes', label: 'Random Treble Notes' },
 		{ value: 'SimpleArpeggios', label: 'Simple Arpeggios' },
+		{ value: 'FiveFinger', label: 'Five Finger' },
 	];
 	function handleTrebleFunctionChange(event) {
 		setSelectedTrebleFunction(event.target.value);
-		console.log(event.target.value);
+
 		switch (event.target.value) {
 			case 'RandomTrebleNotes':
 				setTrebleUpperLimit(16);
@@ -239,6 +260,12 @@ function Staff() {
 				setTrebleUpperLimit(9);
 				if (localtrebleUpperLimit > 9) {
 					setLocalTrebleUpperLimit(9);
+				}
+				break;
+			case 'FiveFinger':
+				setTrebleUpperLimit(12);
+				if (localtrebleUpperLimit > 12) {
+					setLocalTrebleUpperLimit(12);
 				}
 				break;
 			default:
@@ -252,6 +279,9 @@ function Staff() {
 				break;
 			case 'SimpleArpeggios':
 				SimpleArpeggios();
+				break;
+			case 'FiveFinger':
+				FiveFinger();
 				break;
 			default:
 				break;
@@ -268,6 +298,21 @@ function Staff() {
 							type='number'
 							onChange={(e) => setSongLength(e.target.value)}
 							value={songlength}
+						/>
+					</div>
+					<div className='settings-limit'>
+						<h1 className='limits-text'>Speed:</h1>
+						<input
+							className='songlength-input'
+							type='range'
+							min='0.2'
+							max='0.8'
+							step='0.05'
+							onChange={(e) => {
+								setSpeed(parseFloat(e.target.value));
+								console.log(speed);
+							}}
+							value={speed}
 						/>
 					</div>
 					<div className='settings-limit'>
