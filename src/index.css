@@ -16,6 +16,7 @@ body {
 }
 .large-container {
 	padding: 50px;
+	height: 100%;
 }
 .settings-button {
 	display: block;
@@ -89,7 +90,7 @@ body {
 	position: relative;
 	padding-top: 100px;
 	padding-bottom: 100px;
-	height: 600px;
+	height: 100%;
 	width: 100%;
 }
 
@@ -130,7 +131,8 @@ body {
 .note-name {
 	display: block;
 	position: relative;
-	font-size: 70%;
+	font-size: 110%;
+
 	margin: 0;
 	padding-top: 2%;
 	background: transparent;

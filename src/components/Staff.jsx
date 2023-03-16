@@ -83,7 +83,7 @@ function Staff() {
 
 	const handleTrebleLowerLimitChange = (event, index) => {
 		let choice = parseInt(event.target.value);
-		setTrebleLowerLimit(choice);
+
 		setLocalTrebleLowerLimit(choice);
 	};
 	const handleTrebleUpperLimitChange = (event, index) => {
@@ -105,12 +105,13 @@ function Staff() {
 	);
 
 	const trebleLowerLimitOptions = trebledata.filter(
-		(option, index) => index <= localtrebleUpperLimit
+		(option, index) =>
+			index >= trebleLowerLimit && index <= localtrebleUpperLimit
 	); //Match the option and select all options below the trebleUpperLimit
 
 	const trebleUpperLimitOptions = trebledata.filter(
 		(option, index) =>
-			index >= trebleLowerLimit && index <= trebleUpperLimit
+			index >= localtrebleLowerLimit && index <= trebleUpperLimit
 	);
 
 	const [bassLowerLimit, setBassLowerLimit] = useState(0);
@@ -185,7 +186,7 @@ function Staff() {
 			}
 		}
 	}
-	function FiveFinger() {
+	function FiveFinger1() {
 		for (let i = 0; i < songlength; i++) {
 			for (let j = 0; j < 2; j++) {
 				let index = Math.floor(
@@ -201,6 +202,82 @@ function Staff() {
 				treblepattern.push(trebledata[index + 3]);
 				treblepattern.push(trebledata[index]);
 				treblepattern.push(trebledata[index + 4]);
+			}
+		}
+	}
+	function FiveFinger2() {
+		for (let i = 0; i < songlength; i++) {
+			for (let j = 0; j < 2; j++) {
+				let index = Math.floor(
+					Math.random() *
+						(localtrebleUpperLimit - localtrebleLowerLimit + 1) +
+						localtrebleLowerLimit
+				);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index - 1]);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index + 1]);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index + 2]);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index + 3]);
+			}
+		}
+	}
+	function FiveFinger3() {
+		for (let i = 0; i < songlength; i++) {
+			for (let j = 0; j < 2; j++) {
+				let index = Math.floor(
+					Math.random() *
+						(localtrebleUpperLimit - localtrebleLowerLimit + 1) +
+						localtrebleLowerLimit
+				);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index - 2]);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index - 1]);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index + 1]);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index + 2]);
+			}
+		}
+	}
+	function FiveFinger4() {
+		for (let i = 0; i < songlength; i++) {
+			for (let j = 0; j < 2; j++) {
+				let index = Math.floor(
+					Math.random() *
+						(localtrebleUpperLimit - localtrebleLowerLimit + 1) +
+						localtrebleLowerLimit
+				);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index - 3]);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index - 2]);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index - 1]);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index + 1]);
+			}
+		}
+	}
+	function FiveFinger5() {
+		for (let i = 0; i < songlength; i++) {
+			for (let j = 0; j < 2; j++) {
+				let index = Math.floor(
+					Math.random() *
+						(localtrebleUpperLimit - localtrebleLowerLimit + 1) +
+						localtrebleLowerLimit
+				);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index - 4]);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index - 3]);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index - 2]);
+				treblepattern.push(trebledata[index]);
+				treblepattern.push(trebledata[index - 1]);
 			}
 		}
 	}
@@ -247,25 +324,67 @@ function Staff() {
 	const trebleFunctionList = [
 		{ value: 'RandomTrebleNotes', label: 'Random Treble Notes' },
 		{ value: 'SimpleArpeggios', label: 'Simple Arpeggios' },
-		{ value: 'FiveFinger', label: 'Five Finger' },
+		{ value: 'FiveFinger1', label: 'Five Finger 1' },
+		{ value: 'FiveFinger2', label: 'Five Finger 2' },
+		{ value: 'FiveFinger3', label: 'Five Finger 3' },
+		{ value: 'FiveFinger4', label: 'Five Finger 4' },
+		{ value: 'FiveFinger5', label: 'Five Finger 5' },
 	];
 	function handleTrebleFunctionChange(event) {
 		setSelectedTrebleFunction(event.target.value);
 
 		switch (event.target.value) {
 			case 'RandomTrebleNotes':
+				setTrebleLowerLimit(0);
+
 				setTrebleUpperLimit(16);
 				break;
 			case 'SimpleArpeggios':
+				setTrebleLowerLimit(0);
+
 				setTrebleUpperLimit(9);
 				if (localtrebleUpperLimit > 9) {
 					setLocalTrebleUpperLimit(9);
 				}
 				break;
-			case 'FiveFinger':
+			case 'FiveFinger1':
+				setTrebleLowerLimit(0);
+
 				setTrebleUpperLimit(12);
 				if (localtrebleUpperLimit > 12) {
 					setLocalTrebleUpperLimit(12);
+				}
+				break;
+			case 'FiveFinger2':
+				setTrebleLowerLimit(1);
+				setLocalTrebleLowerLimit(1);
+				setTrebleUpperLimit(13);
+				if (localtrebleUpperLimit > 13) {
+					setLocalTrebleUpperLimit(13);
+				}
+				break;
+			case 'FiveFinger3':
+				setTrebleLowerLimit(2);
+				setLocalTrebleLowerLimit(2);
+				setTrebleUpperLimit(14);
+				if (localtrebleUpperLimit > 14) {
+					setLocalTrebleUpperLimit(14);
+				}
+				break;
+			case 'FiveFinger4':
+				setTrebleLowerLimit(3);
+				setLocalTrebleLowerLimit(3);
+				setTrebleUpperLimit(15);
+				if (localtrebleUpperLimit > 15) {
+					setLocalTrebleUpperLimit(15);
+				}
+				break;
+			case 'FiveFinger5':
+				setTrebleLowerLimit(4);
+				setLocalTrebleLowerLimit(4);
+				setTrebleUpperLimit(16);
+				if (localtrebleUpperLimit > 16) {
+					setLocalTrebleUpperLimit(16);
 				}
 				break;
 			default:
@@ -280,8 +399,20 @@ function Staff() {
 			case 'SimpleArpeggios':
 				SimpleArpeggios();
 				break;
-			case 'FiveFinger':
-				FiveFinger();
+			case 'FiveFinger1':
+				FiveFinger1();
+				break;
+			case 'FiveFinger2':
+				FiveFinger2();
+				break;
+			case 'FiveFinger3':
+				FiveFinger3();
+				break;
+			case 'FiveFinger4':
+				FiveFinger4();
+				break;
+			case 'FiveFinger5':
+				FiveFinger5();
 				break;
 			default:
 				break;
