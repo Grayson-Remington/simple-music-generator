@@ -129,12 +129,11 @@ body {
 	margin: 0;
 }
 .note-name {
-	display: block;
+	display: flex;
 	position: relative;
-	font-size: 110%;
-
+	font-size: 100%;
 	margin: 0;
-	padding-top: 2%;
+	top: 2%;
 	background: transparent;
 }
 
