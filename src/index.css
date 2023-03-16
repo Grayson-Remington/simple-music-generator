@@ -131,10 +131,9 @@ body {
 .note-name {
 	display: flex;
 	position: relative;
-	font-size: 100%;
-	margin: 0;
-	top: 2%;
+	top: -20%;
 	background: transparent;
+	font-size: 1rem;
 }
 
 .C6-bar {
