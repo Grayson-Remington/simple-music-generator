@@ -131,9 +131,8 @@ body {
 .note-name {
 	display: block;
 	position: relative;
-	font-size: 110%;
+	font-size: 1.2rem;
 	margin: 0;
-	padding-top: 2%;
 	background: transparent;
 }
 
