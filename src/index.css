@@ -129,11 +129,12 @@ body {
 	margin: 0;
 }
 .note-name {
-	display: flex;
+	display: block;
 	position: relative;
-	top: -20%;
+	font-size: 110%;
+	margin: 0;
+	padding-top: 2%;
 	background: transparent;
-	font-size: 1rem;
 }
 
 .C6-bar {
