@@ -637,13 +637,29 @@ function Staff() {
 										alt=''
 										className={classNames('note-img')}
 									/>
-									<h1 className='note-name'>
+									<svg
+										className='note-name'
+										viewBox='0 0 30 30'
+									>
+										<text
+											x='0'
+											y='15'
+										>
+											{checked &&
+												songpattern.Trebleid.slice(
+													songpattern.Trebleid
+														.length - 2,
+													songpattern.Trebleid.length
+												)}
+										</text>
+									</svg>
+									{/*	<h1 className='note-name'>
 										{checked &&
 											songpattern.Trebleid.slice(
 												songpattern.Trebleid.length - 2,
 												songpattern.Trebleid.length
 											)}
-									</h1>
+											</h1>*/}
 								</div>
 								{songpattern.Bassid && (
 									<div
