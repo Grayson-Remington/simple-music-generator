@@ -37,7 +37,7 @@ function Staff() {
 	};
 
 	let animation;
-
+	let previousviewport = -1;
 	useEffect(() => {
 		const viewport = viewportRef.current;
 
@@ -52,10 +52,18 @@ function Staff() {
 				};
 
 				animation = setInterval(() => {
+					previousviewport = viewport.scrollLeft;
 					currentPos = {
 						x: currentPos.x + speed,
 					};
 					viewport.scrollLeft = currentPos.x;
+
+					if (
+						viewport.scrollLeft ===
+						viewport.scrollWidth - viewport.clientWidth
+					) {
+						setAnimationState('paused');
+					}
 				}, 2);
 				document.addEventListener('click', handleDocumentClick);
 			}, 2000);
