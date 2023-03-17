@@ -33,6 +33,7 @@ function Staff() {
 		setAnimationState('paused');
 	};
 	const handleFrameReset = () => {
+		setAnimationState('paused');
 		viewportRef.current.scrollLeft = 0;
 	};
 
@@ -367,6 +368,9 @@ function Staff() {
 				setTrebleLowerLimit(1);
 				setLocalTrebleLowerLimit(1);
 				setTrebleUpperLimit(13);
+				if (localtrebleUpperLimit < 1) {
+					setLocalTrebleUpperLimit(1);
+				}
 				if (localtrebleUpperLimit > 13) {
 					setLocalTrebleUpperLimit(13);
 				}
@@ -375,6 +379,9 @@ function Staff() {
 				setTrebleLowerLimit(2);
 				setLocalTrebleLowerLimit(2);
 				setTrebleUpperLimit(14);
+				if (localtrebleUpperLimit < 2) {
+					setLocalTrebleUpperLimit(2);
+				}
 				if (localtrebleUpperLimit > 14) {
 					setLocalTrebleUpperLimit(14);
 				}
@@ -383,6 +390,9 @@ function Staff() {
 				setTrebleLowerLimit(3);
 				setLocalTrebleLowerLimit(3);
 				setTrebleUpperLimit(15);
+				if (localtrebleUpperLimit < 3) {
+					setLocalTrebleUpperLimit(3);
+				}
 				if (localtrebleUpperLimit > 15) {
 					setLocalTrebleUpperLimit(15);
 				}
@@ -391,6 +401,9 @@ function Staff() {
 				setTrebleLowerLimit(4);
 				setLocalTrebleLowerLimit(4);
 				setTrebleUpperLimit(16);
+				if (localtrebleUpperLimit < 4) {
+					setLocalTrebleUpperLimit(4);
+				}
 				if (localtrebleUpperLimit > 16) {
 					setLocalTrebleUpperLimit(16);
 				}
