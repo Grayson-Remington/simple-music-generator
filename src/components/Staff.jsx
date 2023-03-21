@@ -325,7 +325,6 @@ function Staff() {
 				treblepattern.push(trebledata[index + 7]);
 				treblepattern.push(trebledata[index + 4]);
 				treblepattern.push(trebledata[index + 2]);
-				treblepattern.push(trebledata[index]);
 			}
 		}
 	}
