@@ -89,6 +89,12 @@ h1 {
 	padding: 10px;
 	border-radius: 10px;
 }
+.greater-container {
+	display: flex;
+	position: relative;
+	height: 100%;
+	width: 100%;
+}
 .staff-container {
 	display: flex;
 	position: relative;
@@ -122,6 +128,8 @@ h1 {
 	height: 7.14%;
 	position: absolute;
 	display: flex;
+	align-items: center;
+	justify-content: center;
 	width: 100%;
 	margin: 0;
 }
@@ -140,6 +148,39 @@ h1 {
 	height: 100%;
 	background: transparent;
 	top: -6%;
+}
+.score {
+	display: block;
+	position: absolute;
+	top: 10%;
+	left: 10%;
+}
+.target-box {
+	position: absolute;
+	height: 100%;
+	width: 40%;
+	border-left: solid red;
+	border-right: solid red;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.wrong {
+	display: none;
+	position: absolute;
+	top: 55%;
+	color: red;
+	font-size: 120%;
+}
+.correct {
+	display: none;
+	position: absolute;
+	top: 55%;
+	color: green;
+	font-size: 120%;
+}
+.show {
+	display: block;
 }
 
 .C6-bar {

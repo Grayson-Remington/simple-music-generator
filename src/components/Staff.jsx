@@ -5,7 +5,8 @@ import StaffLines from '/assets/lines.svg';
 import trebledata from '../data/trebledata';
 import bassdata from '../data/bassdata';
 import classNames from 'classnames';
-
+import { WebMidi } from 'webmidi';
+import { debounce } from 'lodash';
 // Create an onChange for each dropdown so that the values outside of the range are cutoff (ie: C3 is lower limit, so upper limit options would be D3 and above)
 
 function Staff() {
@@ -17,7 +18,14 @@ function Staff() {
 	let [animationState, setAnimationState] = useState('paused');
 	let [checked, setChecked] = useState(false);
 	let [showSettings, setShowSettings] = useState(false);
-	let [speed, setSpeed] = useState(0.4);
+	let [speed, setSpeed] = useState(1.2);
+	let [score, setScore] = useState(0);
+	let [notesToPlay, setNotesToPlay] = useState([]);
+	let [notesPressed, setNotesPressed] = useState([]);
+	let [startingId, setStartingId] = useState(-1);
+	let [endingId, setEndingId] = useState(-1);
+	let [idsToPlay, setIdsToPlay] = useState([]);
+
 	//useEffects
 	const handleChange = () => {
 		setChecked(!checked);
@@ -33,12 +41,25 @@ function Staff() {
 		setAnimationState('paused');
 	};
 	const handleFrameReset = () => {
+		startingId = 0;
+		endingId = 0;
+		setIdsToPlay([]);
 		setAnimationState('paused');
 		viewportRef.current.scrollLeft = 0;
+		notecontainerscorrect.forEach((element) => {
+			element.classList.remove('show');
+		});
+		notecontainerswrong.forEach((element) => {
+			element.classList.remove('show');
+		});
 	};
+	let notecontainerscorrect = document.querySelectorAll('.correct');
+	let notecontainerswrong = document.querySelectorAll('.wrong');
 
 	let animation;
 	let previousviewport = -1;
+	let newNotesToPlay;
+
 	useEffect(() => {
 		const viewport = viewportRef.current;
 
@@ -59,6 +80,116 @@ function Staff() {
 					};
 					viewport.scrollLeft = currentPos.x;
 
+					//elements
+
+					const targetBox =
+						document.getElementsByClassName('target-box');
+					const rectTargetBox = targetBox[0].getBoundingClientRect();
+					const element1 = document.elementsFromPoint(
+						window.innerWidth -
+							window.innerWidth / 2 -
+							rectTargetBox.width / 2 -
+							100,
+						window.innerHeight - window.innerHeight / 2
+					);
+					const element2 = document.elementsFromPoint(
+						window.innerWidth -
+							window.innerWidth / 2 +
+							rectTargetBox.width / 2,
+						window.innerHeight - window.innerHeight / 2
+					);
+
+					const rect1 = element1[0].getBoundingClientRect();
+					const rect2 = element2[0].getBoundingClientRect();
+
+					// SET UP 2 TARGET POINTS ON EACH SIDE OF THE RED BOX TO IDENTIFY AND CHANGE THE DATA VALUE ACCORDINGLY.
+					// Read the class name and store it to identify which notes need to be pressed
+					// If pressed note is same as stored note, set data value to correct
+					// If pressed note is wrong, set data value to incorrect
+
+					//functions
+
+					const targetItem1 = element1.find(
+						(item) => item.className === 'note-container'
+					);
+					const targetItem2 = element2.find(
+						(item) => item.className === 'note-container'
+					);
+
+					const targetItem2id = parseInt(
+						targetItem2.getAttribute('id')
+					);
+					const noteDivs2 = targetItem2.querySelectorAll('.note');
+					let targetcontainer =
+						document.getElementsByClassName('note-container')[
+							idsToPlay[0]
+						];
+
+					//When note is pressed, if the note that is pressed is in the notestoplay[0] slot, remove first note.
+					if (notesPressed.length > 0 && idsToPlay.length > 0) {
+						if (
+							notesPressed[0] === notesToPlay[0] ||
+							notesPressed[0] === notesToPlay[1]
+						) {
+							targetcontainer
+								.querySelectorAll('.correct')[0]
+								.classList.add('show');
+
+							notesToPlay.shift();
+							idsToPlay.shift();
+							notesPressed.shift();
+						} else {
+							targetcontainer
+								.querySelectorAll('.wrong')[0]
+								.classList.add('show');
+
+							notesToPlay.shift();
+							idsToPlay.shift();
+							notesPressed.shift();
+						}
+					}
+					//If note that is pressed is equal to the note to play, change note-container value to corrrect and add 1 to score.
+
+					//If note that is pressed is not equal to the note to play, change note-container value to wrong and remove 1 to score.
+
+					// We use idstoplay[0] to change the wrong/correct note container, dependent of if notesPressed[0] == notestoPlay[0]
+
+					if (
+						targetItem2id > endingId &&
+						idsToPlay[idsToPlay.length - 1] !== targetItem2id
+					) {
+						endingId = targetItem2id;
+
+						noteDivs2.forEach((noteDiv) => {
+							// do something with each note div
+							idsToPlay.push(targetItem2id);
+							notesToPlay.push(
+								noteDiv.classList[1].slice(-7, -5)
+							);
+						});
+					}
+					const targetItem1id = parseInt(
+						targetItem1.getAttribute('id')
+					);
+					if (targetItem1id > startingId) {
+						startingId = targetItem1id;
+					}
+
+					if (
+						targetcontainer.id == startingId &&
+						idsToPlay[0] == startingId &&
+						notesPressed.length == 0
+					) {
+						targetcontainer
+							.querySelectorAll('.wrong')[0]
+							.classList.add('show');
+
+						idsToPlay.shift();
+						notesToPlay.shift();
+
+						setAnimationState('paused');
+					}
+
 					if (
 						viewport.scrollLeft ===
 						viewport.scrollWidth - viewport.clientWidth
@@ -66,8 +197,11 @@ function Staff() {
 						setAnimationState('paused');
 					}
 				}, 2);
+
 				document.addEventListener('click', handleDocumentClick);
-			}, 2000);
+			}, 0);
+			// If note is past the red line, add class. If note is pressed, remove class,
+			// if note passes left line and class still active, set extra class.
 
 			return () => {
 				clearInterval(animation), clearTimeout(timeout);
@@ -88,7 +222,6 @@ function Staff() {
 	const [trebleUpperLimit, setTrebleUpperLimit] = useState(16);
 	const [localtrebleLowerLimit, setLocalTrebleLowerLimit] = useState(0);
 	const [localtrebleUpperLimit, setLocalTrebleUpperLimit] = useState(16);
-	const [treblePatternOptions, setTreblePatternOptions] = useState([]);
 
 	const handleTrebleLowerLimitChange = (event, index) => {
 		let choice = parseInt(event.target.value);
@@ -192,6 +325,7 @@ function Staff() {
 				treblepattern.push(trebledata[index + 7]);
 				treblepattern.push(trebledata[index + 4]);
 				treblepattern.push(trebledata[index + 2]);
+				treblepattern.push(trebledata[index]);
 			}
 		}
 	}
@@ -293,6 +427,7 @@ function Staff() {
 	//Set Treble Notes
 	function SetTrebleNotes() {
 		//What if I used slice here
+
 		setTreblePattern((treblepattern = []));
 
 		handleRunTrebleFunction();
@@ -303,8 +438,9 @@ function Staff() {
 	function SetBassNotes() {
 		setBassPattern((basspattern = []));
 		for (let i = 0; i < songlength; i++) {
-			if (i % 6 === 0 || i === 0) {
-				basspattern.push(bassdata[treblepattern[i].id + 5]);
+			if (i % 1000 === 0) {
+				basspattern.push({});
+				// basspattern.push(bassdata[treblepattern[i].id + 5]);
 			} else {
 				basspattern.push({});
 			}
@@ -316,12 +452,14 @@ function Staff() {
 	function NewSong() {
 		SetTrebleNotes();
 		SetBassNotes();
+
 		setSongPattern((songpattern = []));
 
 		for (let i = 0; i < songlength; i++) {
 			let newObj = { ...treblepattern[i], ...basspattern[i] };
 			songpattern.push(newObj);
 		}
+
 		setSongPattern(songpattern);
 	}
 
@@ -439,8 +577,45 @@ function Staff() {
 				break;
 		}
 	}
+	WebMidi.enable((err) => {
+		if (err) {
+			console.error('WebMidi could not be enabled', err);
+		}
+	});
+	setTimeout(() => {
+		//IMPORTANT!!! ADD a listener for for note-container with the id at idstoPlay[0] and then set the correct/false
+
+		//When note is pressed, if the note that is pressed is in the first notes to play slot, remove first note.
+
+		//If note that is pressed is equal to the note to play, change note-container value to corrrect and add 1 to score.
+
+		//If note that is pressed is not equal to the note to play, change note-container value to wrong and remove 1 to score.
+
+		// We use idstoplay[0] to change the wrong/correct note container, dependent of if notesPressed[0] == notestoPlay[0]
+		WebMidi.inputs[0].addListener('noteon', (e) => {
+			setAnimationState('running');
+
+			if (!notesPressed.includes(`${e.note.name}${e.note.octave}`)) {
+				notesPressed.push(`${e.note.name}${e.note.octave}`);
+			}
+
+			// Remove the event listener after the first note is detected
+		});
+
+		WebMidi.inputs[0].addListener('noteoff', (e) => {
+			var index = notesPressed.indexOf(`${e.note.name}${e.note.octave}`);
+			if (index > -1) {
+				notesPressed.splice(index, 1);
+			}
+		});
+	}, 2000);
+
+	// If note is past the red line, add class. If note is pressed, remove class,
+	// if note passes left line and class still active, set extra class.
+
 	return (
 		<>
+			<h1 className='score'>{score}</h1>
 			{showSettings && (
 				<div className='settings'>
 					<div className='settings-limit'>
@@ -458,11 +633,10 @@ function Staff() {
 							className='songlength-input'
 							type='range'
 							min='0.2'
-							max='0.8'
+							max='1.5'
 							step='0.05'
 							onChange={(e) => {
 								setSpeed(parseFloat(e.target.value));
-								console.log(speed);
 							}}
 							value={speed}
 						/>
@@ -615,69 +789,93 @@ function Staff() {
 						/>
 					</div>
 				</div>
-				<div
-					onClick={handleStartAnimation}
-					className='staff-container'
-					style={{ overflow: 'scroll' }}
-					ref={viewportRef}
-					tabIndex={0}
-				>
-					<img
-						src={FirstStaff}
-						alt=''
-						className='grand-staff'
-					/>
 
-					{songpattern.map((songpattern, index) => {
-						return (
-							<div
-								className='note-container'
-								key={index}
-							>
-								<img
-									src={StaffLines}
-									alt=''
-									className='lines'
-								/>
+				<div className='greater-container'>
+					<div className='target-box'></div>
+					<div
+						onClick={handleStartAnimation}
+						id='staff-container'
+						className='staff-container'
+						style={{ overflow: 'scroll' }}
+						ref={viewportRef}
+						tabIndex={0}
+					>
+						<img
+							src={FirstStaff}
+							alt=''
+							className='grand-staff'
+						/>
+						<img
+							src={StaffLines}
+							alt=''
+							className='lines'
+						/>
+						<img
+							src={StaffLines}
+							alt=''
+							className='lines'
+						/>
+						<img
+							src={StaffLines}
+							alt=''
+							className='lines'
+						/>
+						<img
+							src={StaffLines}
+							alt=''
+							className='lines'
+						/>
+						<img
+							src={StaffLines}
+							alt=''
+							className='lines'
+						/>
+						<img
+							src={StaffLines}
+							alt=''
+							className='lines'
+						/>
+						<img
+							src={StaffLines}
+							alt=''
+							className='lines'
+						/>
+						<img
+							src={StaffLines}
+							alt=''
+							className='lines'
+						/>
+						<img
+							src={StaffLines}
+							alt=''
+							className='lines'
+						/>
+
+						{songpattern.map((songpattern, index) => {
+							return (
 								<div
-									className={classNames(
-										'note',
-										`${songpattern.Trebleid}-note`
-									)}
+									className='note-container'
+									key={index}
+									id={index}
 								>
+									<h1 className='wrong'>WRONG</h1>
+									<h1 className='correct'>CORRECT</h1>
 									<img
-										src={Note}
+										src={StaffLines}
 										alt=''
-										className={classNames('note-img')}
+										className='lines'
 									/>
-									<svg
-										className='note-name'
-										viewBox='0 0 30 30'
-									>
-										<text
-											x='0'
-											y='15'
-										>
-											{checked &&
-												songpattern.Trebleid.slice(
-													songpattern.Trebleid
-														.length - 2,
-													songpattern.Trebleid.length
-												)}
-										</text>
-									</svg>
-								</div>
-								{songpattern.Bassid && (
 									<div
 										className={classNames(
 											'note',
-											`${songpattern.Bassid}-note`
+											`${songpattern.Trebleid}-note`
 										)}
 									>
 										<img
 											src={Note}
 											alt=''
 											className={classNames('note-img')}
+											data-value={0}
 										/>
 										<svg
 											className='note-name'
@@ -688,89 +886,133 @@ function Staff() {
 												y='15'
 											>
 												{checked &&
-													songpattern.Bassid.slice(
-														songpattern.Bassid
+													songpattern.Trebleid.slice(
+														songpattern.Trebleid
 															.length - 2,
-														songpattern.Bassid
+														songpattern.Trebleid
 															.length
 													)}
 											</text>
 										</svg>
 									</div>
-								)}
-								{/* Extra Bars */}
-								<div
-									className={classNames({
-										'C6-bar':
-											songpattern.Trebleid === 'TrebleC6',
-									})}
-								></div>
-								<div
-									className={classNames({
-										'A5-bar':
-											songpattern.Trebleid ===
-												'TrebleB5' ||
-											songpattern.Trebleid ===
-												'TrebleA5' ||
-											songpattern.Trebleid === 'TrebleC6',
-									})}
-								></div>
+									{songpattern.Bassid && (
+										<div
+											className={classNames(
+												'note',
+												`${songpattern.Bassid}-note`
+											)}
+										>
+											<img
+												src={Note}
+												alt=''
+												className={classNames(
+													'note-img'
+												)}
+											/>
+											<svg
+												className='note-name'
+												viewBox='0 0 30 30'
+											>
+												<text
+													x='0'
+													y='15'
+												>
+													{checked &&
+														songpattern.Bassid.slice(
+															songpattern.Bassid
+																.length - 2,
+															songpattern.Bassid
+																.length
+														)}
+												</text>
+											</svg>
+										</div>
+									)}
+									{/* Extra Bars */}
+									<div
+										className={classNames({
+											'C6-bar':
+												songpattern.Trebleid ===
+												'TrebleC6',
+										})}
+									></div>
+									<div
+										className={classNames({
+											'A5-bar':
+												songpattern.Trebleid ===
+													'TrebleB5' ||
+												songpattern.Trebleid ===
+													'TrebleA5' ||
+												songpattern.Trebleid ===
+													'TrebleC6',
+										})}
+									></div>
 
-								<div
-									className={classNames({
-										'treble-C4-bar':
-											songpattern.Trebleid ===
-												'TrebleA3' ||
-											songpattern.Trebleid ===
-												'TrebleC4' ||
-											songpattern.Trebleid ===
-												'TrebleB3' ||
-											songpattern.Trelbeid === 'TrebleD4',
-									})}
-								></div>
-								<div
-									className={classNames({
-										'A3-bar':
-											songpattern.Trebleid ===
-												'TrebleA3' ||
-											songpattern.Trebleid === 'TrebleB2',
-									})}
-								></div>
-								{/*bass bars*/}
-								<div
-									className={classNames({
-										'E4-bar':
-											songpattern.Bassid === 'BassD4' ||
-											songpattern.Bassid === 'BassE4',
-									})}
-								></div>
-								<div
-									className={classNames({
-										'bass-C4-bar':
-											songpattern.Bassid === 'BassC4' ||
-											songpattern.Bassid === 'BassE4' ||
-											songpattern.Bassid === 'BassD4',
-									})}
-								></div>
-								<div
-									className={classNames({
-										'E2-bar':
-											songpattern.Bassid === 'BassE2' ||
-											songpattern.Bassid === 'BassF2' ||
-											songpattern.Bassid === 'BassD2' ||
-											songpattern.Bassid === 'BassC2',
-									})}
-								></div>
-								<div
-									className={classNames({
-										'C2-bar':
-											songpattern.Bassid === 'BassC2' ||
-											songpattern.Bassid === 'BassD2',
-									})}
-								></div>
-							</div>
-						);
-					})}
+									<div
+										className={classNames({
+											'treble-C4-bar':
+												songpattern.Trebleid ===
+													'TrebleA3' ||
+												songpattern.Trebleid ===
+													'TrebleC4' ||
+												songpattern.Trebleid ===
+													'TrebleB3' ||
+												songpattern.Trelbeid ===
+													'TrebleD4',
+										})}
+									></div>
+									<div
+										className={classNames({
+											'A3-bar':
+												songpattern.Trebleid ===
+													'TrebleA3' ||
+												songpattern.Trebleid ===
+													'TrebleB2',
+										})}
+									></div>
+									{/*bass bars*/}
+									<div
+										className={classNames({
+											'E4-bar':
+												songpattern.Bassid ===
+													'BassD4' ||
+												songpattern.Bassid === 'BassE4',
+										})}
+									></div>
+									<div
+										className={classNames({
+											'bass-C4-bar':
+												songpattern.Bassid ===
+													'BassC4' ||
+												songpattern.Bassid ===
+													'BassE4' ||
+												songpattern.Bassid === 'BassD4',
+										})}
+									></div>
+									<div
+										className={classNames({
+											'E2-bar':
+												songpattern.Bassid ===
+													'BassE2' ||
+												songpattern.Bassid ===
+													'BassF2' ||
+												songpattern.Bassid ===
+													'BassD2' ||
+												songpattern.Bassid === 'BassC2',
+										})}
+									></div>
+									<div
+										className={classNames({
+											'C2-bar':
+												songpattern.Bassid ===
+													'BassC2' ||
+												songpattern.Bassid === 'BassD2',
+										})}
+									></div>
+								</div>
+							);
+						})}
+					</div>
 				</div>
 			</div>
 		</>
