@@ -897,6 +897,21 @@ function Staff() {
 							alt=''
 							className='lines'
 						/>
+						<img
+							src={StaffLines}
+							alt=''
+							className='lines'
+						/>
+						<img
+							src={StaffLines}
+							alt=''
+							className='lines'
+						/>
+						<img
+							src={StaffLines}
+							alt=''
+							className='lines'
+						/>
 
 						{songpattern.map((songpattern, index) => {
 							return (
