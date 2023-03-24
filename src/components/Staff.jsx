@@ -186,10 +186,7 @@ function Staff() {
 								)
 							);
 
-							notesPressed.splice(
-								notesPressed.indexOf(notesPressed[0]),
-								1
-							);
+							notesPressed = [];
 						}
 					}
 					//If note that is pressed is equal to the note to play, change note-container value to corrrect and add 1 to score.
@@ -620,9 +617,7 @@ function Staff() {
 		}
 	}
 
-	WebMidi.enable((err) => {
-		console.log(WebMidi.inputs[0]);
-	});
+	WebMidi.enable((err) => {});
 	setTimeout(() => {
 		//IMPORTANT!!! ADD a listener for for note-container with the id at idstoPlay[0] and then set the correct/false
 
