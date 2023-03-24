@@ -7,6 +7,8 @@ import bassdata from '../data/bassdata';
 import classNames from 'classnames';
 import { WebMidi } from 'webmidi';
 import { debounce } from 'lodash';
+import JZZ from 'jzz';
+
 // Create an onChange for each dropdown so that the values outside of the range are cutoff (ie: C3 is lower limit, so upper limit options would be D3 and above)
 
 function Staff() {
@@ -45,13 +47,17 @@ function Staff() {
 		endingId = 0;
 		setIdsToPlay([]);
 		setAnimationState('paused');
-		viewportRef.current.scrollLeft = 0;
+
 		notecontainerscorrect.forEach((element) => {
 			element.classList.remove('show');
 		});
 		notecontainerswrong.forEach((element) => {
 			element.classList.remove('show');
 		});
+	};
+	const handleBackToStart = () => {
+		setAnimationState('paused');
+		viewportRef.current.scrollLeft = 0;
 	};
 	let notecontainerscorrect = document.querySelectorAll('.correct');
 	let notecontainerswrong = document.querySelectorAll('.wrong');
@@ -95,7 +101,8 @@ function Staff() {
 					const element2 = document.elementsFromPoint(
 						window.innerWidth -
 							window.innerWidth / 2 +
-							rectTargetBox.width / 2,
+							rectTargetBox.width / 2 +
+							100,
 						window.innerHeight - window.innerHeight / 2
 					);
 
@@ -126,26 +133,63 @@ function Staff() {
 						];
 
 					//When note is pressed, if the note that is pressed is in the notestoplay[0] slot, remove first note.
-					if (notesPressed.length > 0 && idsToPlay.length > 0) {
+					if (
+						notesPressed.length > 0 &&
+						idsToPlay.length > 0 &&
+						targetcontainer !== undefined &&
+						idsToPlay[0] < idsToPlay[idsToPlay.length - 1]
+					) {
 						if (
-							notesPressed[0] === notesToPlay[0] ||
-							notesPressed[0] === notesToPlay[1]
+							notesToPlay.indexOf(notesPressed[0]) <
+								idsToPlay.indexOf(
+									parseInt(targetcontainer.id) + 1
+								) &&
+							notesToPlay.includes(notesPressed[0])
 						) {
+							//If notesToPlay.indexOf(notesPressed[0]) === (idsToPlay.indexOf(targetcontainer.id + 1) -1 )
 							targetcontainer
 								.querySelectorAll('.correct')[0]
 								.classList.add('show');
 
-							notesToPlay.shift();
-							idsToPlay.shift();
-							notesPressed.shift();
+							notesToPlay.splice(
+								notesToPlay.indexOf(notesPressed[0]),
+								1
+							);
+
+							idsToPlay.splice(
+								idsToPlay.indexOf(parseInt(targetcontainer.id)),
+								1
+							);
+
+							notesPressed.splice(
+								notesPressed.indexOf(notesPressed[0]),
+								1
+							);
 						} else {
 							targetcontainer
 								.querySelectorAll('.wrong')[0]
 								.classList.add('show');
+							console.log(notesToPlay);
+							console.log(idsToPlay);
+							console.log(notesPressed);
+							notesToPlay.splice(
+								0,
+								idsToPlay.indexOf(
+									parseInt(targetcontainer.id) + 1
+								)
+							);
 
-							notesToPlay.shift();
-							idsToPlay.shift();
-							notesPressed.shift();
+							idsToPlay.splice(
+								0,
+								idsToPlay.indexOf(
+									parseInt(targetcontainer.id) + 1
+								)
+							);
+
+							notesPressed.splice(
+								notesPressed.indexOf(notesPressed[0]),
+								1
+							);
 						}
 					}
 					//If note that is pressed is equal to the note to play, change note-container value to corrrect and add 1 to score.
@@ -177,17 +221,17 @@ function Staff() {
 
 					if (
 						targetcontainer.id == startingId &&
-						idsToPlay[0] == startingId &&
-						notesPressed.length == 0
+						idsToPlay[0] == startingId
 					) {
 						targetcontainer
 							.querySelectorAll('.wrong')[0]
 							.classList.add('show');
-
+						console.log('isfired');
 						idsToPlay.shift();
 						notesToPlay.shift();
-
-						setAnimationState('paused');
+						if (idsToPlay[0] > startingId) {
+							setAnimationState('paused');
+						}
 					}
 
 					if (
@@ -437,9 +481,8 @@ function Staff() {
 	function SetBassNotes() {
 		setBassPattern((basspattern = []));
 		for (let i = 0; i < songlength; i++) {
-			if (i % 1000 === 0) {
-				basspattern.push({});
-				// basspattern.push(bassdata[treblepattern[i].id + 5]);
+			if (i % 6 === 0) {
+				basspattern.push(bassdata[treblepattern[i].id + 5]);
 			} else {
 				basspattern.push({});
 			}
@@ -576,10 +619,9 @@ function Staff() {
 				break;
 		}
 	}
+
 	WebMidi.enable((err) => {
-		if (err) {
-			console.error('WebMidi could not be enabled', err);
-		}
+		console.log(WebMidi.inputs[0]);
 	});
 	setTimeout(() => {
 		//IMPORTANT!!! ADD a listener for for note-container with the id at idstoPlay[0] and then set the correct/false
@@ -776,6 +818,12 @@ function Staff() {
 						onClick={handleFrameReset}
 					>
 						Reset
+					</button>
+					<button
+						type='button'
+						onClick={handleBackToStart}
+					>
+						Back To Start
 					</button>
 					<div className='hints'>
 						Hints:
