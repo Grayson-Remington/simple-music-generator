@@ -43,8 +43,8 @@ function Staff() {
 		setAnimationState('paused');
 	};
 	const handleFrameReset = () => {
-		startingId = 0;
-		endingId = 0;
+		startingId = -1;
+		endingId = -1;
 		idsToPlay = [];
 		notesToPlay = [];
 		setAnimationState('paused');
