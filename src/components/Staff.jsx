@@ -186,7 +186,10 @@ function Staff() {
 								)
 							);
 
-							notesPressed = [];
+							notesPressed.splice(
+								notesPressed.indexOf(notesPressed[0]),
+								1
+							);
 						}
 					}
 					//If note that is pressed is equal to the note to play, change note-container value to corrrect and add 1 to score.
@@ -224,8 +227,15 @@ function Staff() {
 							.querySelectorAll('.wrong')[0]
 							.classList.add('show');
 						console.log('isfired');
-						idsToPlay.shift();
-						notesToPlay.shift();
+						notesToPlay.splice(
+							0,
+							idsToPlay.indexOf(parseInt(targetcontainer.id) + 1)
+						);
+
+						idsToPlay.splice(
+							0,
+							idsToPlay.indexOf(parseInt(targetcontainer.id) + 1)
+						);
 						if (idsToPlay[0] > startingId) {
 							setAnimationState('paused');
 						}
