@@ -236,9 +236,8 @@ function Staff() {
 							0,
 							idsToPlay.indexOf(parseInt(targetcontainer.id) + 1)
 						);
-						if (idsToPlay[0] > startingId) {
-							setAnimationState('paused');
-						}
+
+						setAnimationState('paused');
 					}
 
 					if (
