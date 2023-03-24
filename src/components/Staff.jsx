@@ -45,8 +45,8 @@ function Staff() {
 	const handleFrameReset = () => {
 		startingId = -1;
 		endingId = -1;
-		idsToPlay = [];
-		notesToPlay = [];
+		setIdsToPlay([]);
+		setNotesToPlay([]);
 		setAnimationState('paused');
 
 		notecontainerscorrect.forEach((element) => {
@@ -170,9 +170,7 @@ function Staff() {
 							targetcontainer
 								.querySelectorAll('.wrong')[0]
 								.classList.add('show');
-							console.log(notesToPlay);
-							console.log(idsToPlay);
-							console.log(notesPressed);
+
 							notesToPlay.splice(
 								0,
 								idsToPlay.indexOf(
@@ -191,6 +189,7 @@ function Staff() {
 								notesPressed.indexOf(notesPressed[0]),
 								1
 							);
+							setAnimationState('paused');
 						}
 					}
 					//If note that is pressed is equal to the note to play, change note-container value to corrrect and add 1 to score.
@@ -639,12 +638,12 @@ function Staff() {
 
 		// We use idstoplay[0] to change the wrong/correct note container, dependent of if notesPressed[0] == notestoPlay[0]
 		WebMidi.inputs[0].addListener('noteon', (e) => {
-			setAnimationState('running');
-
 			if (!notesPressed.includes(`${e.note.name}${e.note.octave}`)) {
 				notesPressed.push(`${e.note.name}${e.note.octave}`);
 			}
-
+			if (notesPressed.includes(notesToPlay[0])) {
+				setAnimationState('running');
+			}
 			// Remove the event listener after the first note is detected
 		});
 
