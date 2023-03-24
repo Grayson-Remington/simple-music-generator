@@ -20,7 +20,7 @@ function Staff() {
 	let [animationState, setAnimationState] = useState('paused');
 	let [checked, setChecked] = useState(false);
 	let [showSettings, setShowSettings] = useState(false);
-	let [speed, setSpeed] = useState(1.2);
+	let [speed, setSpeed] = useState(1.0);
 	let [score, setScore] = useState(0);
 	let [notesToPlay, setNotesToPlay] = useState([]);
 	let [notesPressed, setNotesPressed] = useState([]);
@@ -45,7 +45,8 @@ function Staff() {
 	const handleFrameReset = () => {
 		startingId = 0;
 		endingId = 0;
-		setIdsToPlay([]);
+		idsToPlay = [];
+		notesToPlay = [];
 		setAnimationState('paused');
 
 		notecontainerscorrect.forEach((element) => {
@@ -679,7 +680,7 @@ function Staff() {
 							type='range'
 							min='0.2'
 							max='1.5'
-							step='0.05'
+							step='0.01'
 							onChange={(e) => {
 								setSpeed(parseFloat(e.target.value));
 							}}
@@ -855,6 +856,16 @@ function Staff() {
 							src={FirstStaff}
 							alt=''
 							className='grand-staff'
+						/>
+						<img
+							src={StaffLines}
+							alt=''
+							className='lines'
+						/>
+						<img
+							src={StaffLines}
+							alt=''
+							className='lines'
 						/>
 						<img
 							src={StaffLines}
