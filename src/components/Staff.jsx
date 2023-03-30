@@ -27,7 +27,7 @@ function Staff() {
 	let [startingId, setStartingId] = useState(-1);
 	let [endingId, setEndingId] = useState(-1);
 	let [idsToPlay, setIdsToPlay] = useState([]);
-
+	let [bassNoteFrequency, setBassNoteFrequency] = useState(0);
 	//useEffects
 	const handleChange = () => {
 		setChecked(!checked);
@@ -487,7 +487,7 @@ function Staff() {
 	function SetBassNotes() {
 		setBassPattern((basspattern = []));
 		for (let i = 0; i < songlength; i++) {
-			if (i % 6 === 0) {
+			if (i % bassNoteFrequency === 0) {
 				basspattern.push(bassdata[treblepattern[i].id + 5]);
 			} else {
 				basspattern.push({});
@@ -628,15 +628,6 @@ function Staff() {
 
 	WebMidi.enable((err) => {});
 	setTimeout(() => {
-		//IMPORTANT!!! ADD a listener for for note-container with the id at idstoPlay[0] and then set the correct/false
-
-		//When note is pressed, if the note that is pressed is in the first notes to play slot, remove first note.
-
-		//If note that is pressed is equal to the note to play, change note-container value to corrrect and add 1 to score.
-
-		//If note that is pressed is not equal to the note to play, change note-container value to wrong and remove 1 to score.
-
-		// We use idstoplay[0] to change the wrong/correct note container, dependent of if notesPressed[0] == notestoPlay[0]
 		WebMidi.inputs[0].addListener('noteon', (e) => {
 			if (!notesPressed.includes(`${e.note.name}${e.note.octave}`)) {
 				notesPressed.push(`${e.note.name}${e.note.octave}`);
@@ -644,7 +635,6 @@ function Staff() {
 			if (notesPressed.includes(notesToPlay[0])) {
 				setAnimationState('running');
 			}
-			// Remove the event listener after the first note is detected
 		});
 
 		WebMidi.inputs[0].addListener('noteoff', (e) => {
@@ -654,9 +644,6 @@ function Staff() {
 			}
 		});
 	}, 2000);
-
-	// If note is past the red line, add class. If note is pressed, remove class,
-	// if note passes left line and class still active, set extra class.
 
 	return (
 		<>
@@ -675,7 +662,7 @@ function Staff() {
 					<div className='settings-limit'>
 						<h1 className='limits-text'>Speed:</h1>
 						<input
-							className='songlength-input'
+							className='songspeed-input'
 							type='range'
 							min='0.2'
 							max='1.5'
@@ -710,6 +697,17 @@ function Staff() {
 								</option>
 							))}
 						</select>
+					</div>
+					<div className='settings-limit'>
+						<h1 className='limits-text'>Bass Frequency</h1>
+						<input
+							className='songlength-input'
+							type='number'
+							onChange={(e) =>
+								setBassNoteFrequency(e.target.value)
+							}
+							value={bassNoteFrequency}
+						/>
 					</div>
 					<div className='settings-limit'>
 						<h1 className='limits-text'>Set Lower Treble Limit:</h1>
